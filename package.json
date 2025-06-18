@@ -1,0 +1,27 @@
+{
+  "name": "mcp",
+  "version": "0.1.0",
+  "description": "An XMCP application with tool syntax",
+  "type": "module",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "xmcp build",
+    "dev": "xmcp dev",
+    "start-sse": "node dist/sse.js",
+    "start-stdio": "node dist/stdio.js",
+    "postbuild": "xmcp build:vercel"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.11.4",
+    "basehub": "^9.0.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^5.0.4",
+    "xmcp": "latest",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "swc-loader": "^0.2.6"
+  }
+}
