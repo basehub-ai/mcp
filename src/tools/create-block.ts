@@ -11,7 +11,7 @@ export const schema = {
       "Optional ID of the parent block. If provided, the new blocks will be created as children of this block. If not provided, the blocks will be created at the root level."
     ),
   data: z
-    .any()
+    .array(z.any())
     .describe(
       "Array of block creation objects, each with its own type and value. See block types in BaseHub for details."
     ),
@@ -46,7 +46,11 @@ export default async function createBlocks({
   const result = await basehub().mutation({
     transaction: {
       __args: {
-        data: { type: "create", parentId, data },
+        data: data.map((itemData) => ({
+          type: "create",
+          parentId,
+          data: itemData,
+        })),
         ...(autoCommit ? { autoCommit } : {}),
       },
       message: true,

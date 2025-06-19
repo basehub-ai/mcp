@@ -4,8 +4,8 @@ import { type InferSchema } from "xmcp";
 
 export const schema = {
   data: z
-    .array(z.object({ id: z.string().describe("ID of the block to delete") }))
-    .describe("Array of delete objects, each with at least 'id'."),
+    .array(z.string().describe("ID of the block to delete"))
+    .describe("Array of block ids to delete"),
   autoCommit: z
     .string()
     .optional()
@@ -32,7 +32,7 @@ export default async function deleteBlocks({
   const result = await basehub().mutation({
     transaction: {
       __args: {
-        data: { type: "delete", data },
+        data: data.map((id) => ({ id, type: "delete" })),
         ...(autoCommit ? { autoCommit } : {}),
       },
       message: true,

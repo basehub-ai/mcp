@@ -38,7 +38,7 @@ export default async function updateBlocks({
   const result = await basehub().mutation({
     transaction: {
       __args: {
-        data: { type: "update", data },
+        data: data.map((item) => ({ ...item, type: "update" })),
         ...(autoCommit ? { autoCommit } : {}),
       },
       message: true,
