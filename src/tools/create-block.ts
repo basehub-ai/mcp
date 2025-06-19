@@ -1,4 +1,4 @@
-import { basehub, Mutation } from "basehub";
+import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 
