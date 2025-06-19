@@ -1,4 +1,4 @@
-import { basehub, Mutation } from "basehub";
+// import { basehub, Mutation } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 
@@ -36,17 +36,18 @@ export default async function createBlock({
   autoCommit,
 }: InferSchema<typeof schema>) {
   // Send the mutation as a transaction
-  const result = await basehub().mutation({
-    transaction: {
-      __args: {
-        data: { type: "create", parentId, data },
-        ...(autoCommit ? { autoCommit } : {}),
-      },
-      message: true,
-      status: true,
-      duration: true,
-    },
-  });
+  // const result = await basehub().mutation({
+  //   transaction: {
+  //     __args: {
+  //       data: { type: "create", parentId, data },
+  //       ...(autoCommit ? { autoCommit } : {}),
+  //     },
+  //     message: true,
+  //     status: true,
+  //     duration: true,
+  //   },
+  // });
 
-  return result;
+  // return result;
+  return 'sarasa'
 }
