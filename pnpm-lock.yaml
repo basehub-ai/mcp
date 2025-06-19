@@ -21,7 +21,7 @@ importers:
         specifier: ^5.0.4
         version: 5.8.3
       xmcp:
-        specifier: 0.0.10
+        specifier: latest
         version: 0.0.10(@types/node@24.0.3)(typescript@5.8.3)
       zod:
         specifier: ^3.24.4
