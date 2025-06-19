@@ -4,14 +4,8 @@ import { type InferSchema } from "xmcp";
 
 export const schema = {
   data: z
-    .array(
-      z
-        .object({ id: z.string().describe("ID of the block to update") })
-        .passthrough()
-    )
-    .describe(
-      "Array of update objects, each with at least 'id', 'type', and update fields."
-    ),
+    .array(z.object({ id: z.string().describe("ID of the block to delete") }))
+    .describe("Array of delete objects, each with at least 'id'."),
   autoCommit: z
     .string()
     .optional()
@@ -21,18 +15,24 @@ export const schema = {
 };
 
 export const metadata = {
-  name: "update_block",
-  description: "Update one or more BaseHub blocks in a single transaction.",
+  name: "delete_blocks",
+  description: "Delete one or more BaseHub blocks in a single transaction.",
+  annotations: {
+    title: "Delete BaseHub Blocks",
+    readOnlyHint: true,
+    destructiveHint: true,
+    idempotentHint: false,
+  },
 };
 
-export default async function updateBlock({
+export default async function deleteBlocks({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
   const result = await basehub().mutation({
     transaction: {
       __args: {
-        data: { type: "update", data },
+        data: { type: "delete", data },
         ...(autoCommit ? { autoCommit } : {}),
       },
       message: true,
@@ -41,5 +41,7 @@ export default async function updateBlock({
     },
   });
 
-  return result;
+  return {
+    content: [{ type: "text", text: JSON.stringify(result) }],
+  };
 }

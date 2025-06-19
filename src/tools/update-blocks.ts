@@ -2,18 +2,15 @@ import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 
-// Define the schema for tool parameters
 export const schema = {
-  parentId: z
-    .string()
-    .optional()
-    .describe(
-      "Optional ID of the parent block. If provided, the new blocks will be created as children of this block. If not provided, the blocks will be created at the root level."
-    ),
   data: z
-    .any()
+    .array(
+      z
+        .object({ id: z.string().describe("ID of the block to update") })
+        .passthrough()
+    )
     .describe(
-      "Array of block creation objects, each with its own type and value. See block types in BaseHub for details."
+      "Array of update objects, each with at least 'id', 'type', and update fields."
     ),
   autoCommit: z
     .string()
@@ -23,30 +20,25 @@ export const schema = {
     ),
 };
 
-// Define tool metadata
 export const metadata = {
-  name: "create_blocks",
-  description:
-    "Create one or more BaseHub blocks (with possible nested children) in a single transaction.",
+  name: "update_blocks",
+  description: "Update one or more BaseHub blocks in a single transaction.",
   annotations: {
-    title: "Create BaseHub Blocks",
+    title: "Update BaseHub Blocks",
     readOnlyHint: true,
     destructiveHint: false,
     idempotentHint: true,
   },
 };
 
-// Tool implementation
-export default async function createBlocks({
-  parentId,
+export default async function updateBlocks({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
-  // Send the mutation as a transaction
   const result = await basehub().mutation({
     transaction: {
       __args: {
-        data: { type: "create", parentId, data },
+        data: { type: "update", data },
         ...(autoCommit ? { autoCommit } : {}),
       },
       message: true,
