@@ -2,7 +2,6 @@
   "name": "mcp",
   "version": "0.1.0",
   "description": "An XMCP application with tool syntax",
-  "type": "module",
   "engines": {
     "node": ">=20.0.0"
   },
