@@ -9,9 +9,7 @@
   "scripts": {
     "build": "xmcp build",
     "dev": "xmcp dev",
-    "start-sse": "node dist/sse.js",
-    "start-stdio": "node dist/stdio.js",
-    "postbuild": "xmcp build:vercel"
+    "start-http": "node dist/streamable-http.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.4",
