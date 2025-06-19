@@ -1,4 +1,4 @@
-// import { basehub } from "basehub";
+import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 
@@ -23,18 +23,17 @@ export default async function deleteBlock({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
-  // const result = await basehub().mutation({
-  //   transaction: {
-  //     __args: {
-  //       data: { type: "delete", data },
-  //       ...(autoCommit ? { autoCommit } : {}),
-  //     },
-  //     message: true,
-  //     status: true,
-  //     duration: true,
-  //   },
-  // });
+  const result = await basehub().mutation({
+    transaction: {
+      __args: {
+        data: { type: "delete", data },
+        ...(autoCommit ? { autoCommit } : {}),
+      },
+      message: true,
+      status: true,
+      duration: true,
+    },
+  });
 
-  // return result;
-  return "sarasa";
+  return result;
 }
