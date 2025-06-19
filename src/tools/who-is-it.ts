@@ -3,18 +3,20 @@ import { type InferSchema } from "xmcp";
 
 // Define the schema for tool parameters
 export const schema = {
-  personAsking: z.discriminatedUnion("name", [
-    z.object({
-      name: z.literal("Pedro"),
-      age: z.number().describe("The age of the person asking the question."),
-    }),
-    z.object({
-      name: z.literal("Juan"),
-      hairColor: z
-        .string()
-        .describe("The hair color of the person asking the question."),
-    }),
-  ]),
+  personAsking: z
+    .discriminatedUnion("name", [
+      z.object({
+        name: z.literal("Pedro"),
+        age: z.number().describe("The age of the person asking the question."),
+      }),
+      z.object({
+        name: z.literal("Juan"),
+        hairColor: z
+          .string()
+          .describe("The hair color of the person asking the question."),
+      }),
+    ])
+    .describe("The person who is asking the question, either Pedro or Juan."),
 };
 
 // Define tool metadata
