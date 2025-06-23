@@ -2,6 +2,7 @@ import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { DeleteOpSchema } from "@basehub/mutation-api-helpers";
+import { basehubMutationResult } from "../utils";
 
 export const schema = {
   data: z
@@ -42,8 +43,16 @@ export default async function deleteBlocks({
         duration: true,
       },
     });
+
+    const parsedResult = basehubMutationResult.parse(result);
+    if (parsedResult.transaction.status === "Failed") {
+      throw new Error(
+        `Transaction failed: ${parsedResult.transaction.message}`
+      );
+    }
+
     return {
-      content: [{ type: "text", text: JSON.stringify(result) }],
+      content: [{ type: "text", text: JSON.stringify(parsedResult) }],
     };
   } catch (error) {
     return {
