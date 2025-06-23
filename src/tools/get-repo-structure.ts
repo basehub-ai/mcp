@@ -41,18 +41,31 @@ export default async function getRepositoryStructure({
   focus,
   targetBlock,
 }: InferSchema<typeof schema>) {
-  // Send the mutation as a transaction
-  const result = await basehub().query({
-    _structure: {
-      __args: {
-        resolveTargetsWith: "objectName",
-        focus: focus ?? false,
-        ...(targetBlock ? { targetBlock } : {}),
+  try {
+    // Send the mutation as a transaction
+    const result = await basehub().query({
+      _structure: {
+        __args: {
+          resolveTargetsWith: "objectName",
+          focus: focus ?? false,
+          ...(targetBlock ? { targetBlock } : {}),
+        },
       },
-    },
-  });
-
-  return {
-    content: [{ type: "text", text: JSON.stringify(result) }],
-  };
+    });
+    return {
+      content: [{ type: "text", text: JSON.stringify(result) }],
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: `Error: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        },
+      ],
+    };
+  }
 }

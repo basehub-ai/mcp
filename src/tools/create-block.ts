@@ -43,24 +43,37 @@ export default async function createBlocks({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
-  // Send the mutation as a transaction
-  const result = await basehub().mutation({
-    transaction: {
-      __args: {
-        data: data.map((itemData) => ({
-          type: "create",
-          parentId,
-          data: itemData,
-        })),
-        ...(autoCommit ? { autoCommit } : {}),
+  try {
+    // Send the mutation as a transaction
+    const result = await basehub().mutation({
+      transaction: {
+        __args: {
+          data: data.map((itemData) => ({
+            type: "create",
+            parentId,
+            data: itemData,
+          })),
+          ...(autoCommit ? { autoCommit } : {}),
+        },
+        message: true,
+        status: true,
+        duration: true,
       },
-      message: true,
-      status: true,
-      duration: true,
-    },
-  });
-
-  return {
-    content: [{ type: "text", text: JSON.stringify(result) }],
-  };
+    });
+    return {
+      content: [{ type: "text", text: JSON.stringify(result) }],
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: `Error: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        },
+      ],
+    };
+  }
 }

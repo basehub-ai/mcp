@@ -30,19 +30,32 @@ export default async function deleteBlocks({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
-  const result = await basehub().mutation({
-    transaction: {
-      __args: {
-        data: data.map((id) => ({ id, type: "delete" })),
-        ...(autoCommit ? { autoCommit } : {}),
+  try {
+    const result = await basehub().mutation({
+      transaction: {
+        __args: {
+          data: data.map((id) => ({ id, type: "delete" })),
+          ...(autoCommit ? { autoCommit } : {}),
+        },
+        message: true,
+        status: true,
+        duration: true,
       },
-      message: true,
-      status: true,
-      duration: true,
-    },
-  });
-
-  return {
-    content: [{ type: "text", text: JSON.stringify(result) }],
-  };
+    });
+    return {
+      content: [{ type: "text", text: JSON.stringify(result) }],
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: `Error: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        },
+      ],
+    };
+  }
 }
