@@ -28,12 +28,12 @@ export const schema = {
 export const metadata = {
   name: "create_blocks",
   description:
-    "Create one or more BaseHub blocks (with possible nested children) in a single transaction.",
+    "Create one or more BaseHub blocks (with possible nested children) in a single transaction. Children should be always nested in the value key of its parent, never as another item in the array.",
   annotations: {
     title: "Create BaseHub Blocks",
-    readOnlyHint: true,
+    readOnlyHint: false,
     destructiveHint: false,
-    idempotentHint: true,
+    idempotentHint: false,
   },
 };
 

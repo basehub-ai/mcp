@@ -22,9 +22,9 @@ export const metadata = {
   description: "Update one or more BaseHub blocks in a single transaction.",
   annotations: {
     title: "Update BaseHub Blocks",
-    readOnlyHint: true,
+    readOnlyHint: false,
     destructiveHint: false,
-    idempotentHint: true,
+    idempotentHint: false,
   },
 };
 

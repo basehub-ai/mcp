@@ -20,7 +20,7 @@ export const metadata = {
   description: "Delete one or more BaseHub blocks in a single transaction.",
   annotations: {
     title: "Delete BaseHub Blocks",
-    readOnlyHint: true,
+    readOnlyHint: false,
     destructiveHint: true,
     idempotentHint: false,
   },
