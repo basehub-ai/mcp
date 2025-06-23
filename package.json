@@ -11,7 +11,7 @@
     "start-http": "node dist/streamable-http.js"
   },
   "dependencies": {
-    "@basehub/mutation-api-helpers": "2.1.0",
+    "@basehub/mutation-api-helpers": "2.1.1",
     "@modelcontextprotocol/sdk": "^1.11.4",
     "basehub": "^9.0.6",
     "ts-loader": "^9.4.2",

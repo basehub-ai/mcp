@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@basehub/mutation-api-helpers':
-        specifier: 2.1.0
-        version: 2.1.0(zod@3.25.67)
+        specifier: 2.1.1
+        version: 2.1.1(zod@3.25.67)
       '@modelcontextprotocol/sdk':
         specifier: ^1.11.4
         version: 1.12.3
@@ -51,8 +51,8 @@ packages:
   '@basehub/mutation-api-helpers@2.0.11':
     resolution: {integrity: sha512-OWudSZELX/XOchBxmifu5bAZ+88E52OX2sz9O8ryGnF1COkQ90vQVV75ZguxY1SHjX7v9jfG5AUaop0muCX3Wg==}
 
-  '@basehub/mutation-api-helpers@2.1.0':
-    resolution: {integrity: sha512-QdrWTD7SFLW7ATM5j35IJa0A/my6dvbA+CUrzs343+UwwtQLcBJFIQ4iX0P992Txf2w8VmTa4h8wMpqhs/OnSQ==}
+  '@basehub/mutation-api-helpers@2.1.1':
+    resolution: {integrity: sha512-eOgoCF0w1ccEQZn279tJwxdSRDKAhDI1W8O/OkoM5/M6AY8NFhiy1jHzf+QtwPE8O7vomSWiHZbge79f023kUA==}
     peerDependencies:
       zod: ^3.25.0
 
@@ -2864,7 +2864,7 @@ snapshots:
 
   '@basehub/mutation-api-helpers@2.0.11': {}
 
-  '@basehub/mutation-api-helpers@2.1.0(zod@3.25.67)':
+  '@basehub/mutation-api-helpers@2.1.1(zod@3.25.67)':
     dependencies:
       zod: 3.25.67
 
