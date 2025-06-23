@@ -4,11 +4,18 @@ import { type InferSchema } from "xmcp";
 
 // Define the schema for tool parameters
 export const schema = {
+  draft: z
+    .boolean()
+    .optional()
+    .describe(
+      "Whether to use draft mode. Defaults to false. Draft mode returns the working tree, while non-draft mode returns the committed structure."
+    ),
   targetBlock: z
     .object({
-      id: z.string().describe("ID of the target block to focus on."),
+      id: z.string().optional().describe("ID of the target block to focus on."),
       label: z
         .string()
+        .optional()
         .describe(
           "Label for the target block, used for focus context. Will be next to the block that matches the ID."
         ),
@@ -39,21 +46,29 @@ export const metadata = {
 // Tool implementation
 export default async function getRepositoryStructure({
   focus,
+  draft,
   targetBlock,
 }: InferSchema<typeof schema>) {
   try {
     // Send the mutation as a transaction
-    const result = await basehub().query({
+    const result = await basehub({ draft }).query({
       _structure: {
         __args: {
           resolveTargetsWith: "objectName",
-          focus: focus ?? false,
-          ...(targetBlock ? { targetBlock } : {}),
+          ...(targetBlock?.id
+            ? { targetBlock: { ...targetBlock, focus: focus ?? false } }
+            : {}),
         },
       },
     });
     return {
-      content: [{ type: "text", text: JSON.stringify(result) }],
+      content: [
+        {
+          type: "text",
+          text:
+            "_structure" in result ? result._structure : JSON.stringify(result),
+        },
+      ],
     };
   } catch (error) {
     return {
