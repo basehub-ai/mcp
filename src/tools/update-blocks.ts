@@ -1,14 +1,11 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
+import { UpdateOpSchema } from "@basehub/mutation-api-helpers";
 
 export const schema = {
   data: z
-    .array(
-      z
-        .object({ id: z.string().describe("ID of the block to update") })
-        .passthrough()
-    )
+    .array(UpdateOpSchema.omit({ children: true }))
     .describe(
       "Array of update objects, each with at least 'id', 'type', and update fields."
     ),

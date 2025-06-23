@@ -1,11 +1,12 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
+import { DeleteOpSchema } from "@basehub/mutation-api-helpers";
 
 export const schema = {
   data: z
-    .array(z.string().describe("ID of the block to delete"))
-    .describe("Array of block ids to delete"),
+    .array(DeleteOpSchema)
+    .describe("Array of objects with the block ids to delete"),
   autoCommit: z
     .string()
     .optional()

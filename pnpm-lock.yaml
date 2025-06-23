@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@basehub/mutation-api-helpers':
+        specifier: 2.1.0
+        version: 2.1.0(zod@3.25.67)
       '@modelcontextprotocol/sdk':
         specifier: ^1.11.4
         version: 1.12.3
@@ -47,6 +50,11 @@ packages:
 
   '@basehub/mutation-api-helpers@2.0.11':
     resolution: {integrity: sha512-OWudSZELX/XOchBxmifu5bAZ+88E52OX2sz9O8ryGnF1COkQ90vQVV75ZguxY1SHjX7v9jfG5AUaop0muCX3Wg==}
+
+  '@basehub/mutation-api-helpers@2.1.0':
+    resolution: {integrity: sha512-QdrWTD7SFLW7ATM5j35IJa0A/my6dvbA+CUrzs343+UwwtQLcBJFIQ4iX0P992Txf2w8VmTa4h8wMpqhs/OnSQ==}
+    peerDependencies:
+      zod: ^3.25.0
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -2855,6 +2863,10 @@ snapshots:
   '@babel/runtime@7.27.6': {}
 
   '@basehub/mutation-api-helpers@2.0.11': {}
+
+  '@basehub/mutation-api-helpers@2.1.0(zod@3.25.67)':
+    dependencies:
+      zod: 3.25.67
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:

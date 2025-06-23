@@ -1,6 +1,7 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
+import { CreateOpSchema } from "@basehub/mutation-api-helpers";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -11,7 +12,7 @@ export const schema = {
       "Optional ID of the parent block. If provided, the new blocks will be created as children of this block. If not provided, the blocks will be created at the root level."
     ),
   data: z
-    .array(z.any())
+    .array(CreateOpSchema)
     .describe(
       "Array of block creation objects, each with its own type and value. See block types in BaseHub for details."
     ),
