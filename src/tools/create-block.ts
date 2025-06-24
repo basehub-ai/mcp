@@ -20,15 +20,16 @@ export const schema = {
     .string()
     .optional()
     .describe(
-      "Optional commit message. If provided, the transaction will be auto-committed with this message."
+      "Optional commit message. If provided, the transaction will be auto-committed with this message. Don't provide unless the user asks for it."
     ),
 };
 
 // Define tool metadata
 export const metadata = {
   name: "create_blocks",
-  description:
-    "Create one or more BaseHub blocks (with possible nested children) in a single transaction. Children should be always nested in the value key of its parent, never as another item in the array.",
+  description: `Create one or more BaseHub blocks (with possible nested children) in a single transaction.
+  Children should be always nested in the value key of its parent, never as another item in the array.
+  See block types in BaseHub for reference.`,
   annotations: {
     title: "Create BaseHub Blocks",
     readOnlyHint: false,

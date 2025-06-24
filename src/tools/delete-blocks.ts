@@ -12,7 +12,7 @@ export const schema = {
     .string()
     .optional()
     .describe(
-      "Optional commit message. If provided, the transaction will be auto-committed with this message."
+      "Optional commit message. If provided, the transaction will be auto-committed with this message. Don't provide unless the user asks for it."
     ),
 };
 

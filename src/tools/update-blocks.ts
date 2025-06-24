@@ -7,13 +7,13 @@ export const schema = {
   data: z
     .array(UpdateOpSchema.omit({ children: true }))
     .describe(
-      "Array of update objects, each with at least 'id', 'type', and update fields."
+      "Array of update objects, each with at least 'id', 'type', and update fields. block 'type' key is crucial to make updates, see block types for reference."
     ),
   autoCommit: z
     .string()
     .optional()
     .describe(
-      "Optional commit message. If provided, the transaction will be auto-committed with this message."
+      "Optional commit message. If provided, the transaction will be auto-committed with this message. Don't provide unless the user asks for it."
     ),
 };
 

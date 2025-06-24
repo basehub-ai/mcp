@@ -7,8 +7,9 @@ export const schema = {
   draft: z
     .boolean()
     .optional()
+    .default(true)
     .describe(
-      "Whether to use draft mode. Defaults to false. Draft mode returns the working tree, while non-draft mode returns the committed structure."
+      "Whether to use draft mode. Defaults to true. Draft mode returns the working tree (useful when you want to make changes to the CURRENT state of the repository), while non-draft mode returns the committed structure (useful when asked for production content)."
     ),
   targetBlock: z
     .object({
