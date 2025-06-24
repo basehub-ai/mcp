@@ -35,7 +35,7 @@ export default async function deleteBlocks({
     const result = await basehub().mutation({
       transaction: {
         __args: {
-          data: data.map((id) => ({ id, type: "delete" })),
+          data: data.map((data) => ({ ...data, type: "delete" })),
           ...(autoCommit ? { autoCommit } : {}),
         },
         message: true,
