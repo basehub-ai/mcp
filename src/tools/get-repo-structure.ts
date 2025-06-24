@@ -1,6 +1,7 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
+import { BASEHUB_BLOCK_TYPES } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -35,7 +36,7 @@ export const schema = {
 export const metadata = {
   name: "get_repository_structure",
   description:
-    "Retrieve the structure of the current BaseHub repository in XML format.",
+    "Retrieve the structure of the current BaseHub repository in XML format and possible block types.",
   annotations: {
     title: "Retrieve BaseHub Repository Structure",
     readOnlyHint: true,
@@ -64,6 +65,10 @@ export default async function getRepositoryStructure({
     });
     return {
       content: [
+        {
+          type: "text",
+          text: BASEHUB_BLOCK_TYPES,
+        },
         {
           type: "text",
           text:
