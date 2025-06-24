@@ -36,7 +36,7 @@ export const schema = {
 export const metadata = {
   name: "get_repository_structure",
   description:
-    "Retrieve the structure of the current BaseHub repository in XML format and possible block types.",
+    "Retrieve the structure of the current BaseHub repository in XML format and possible block types. Use when you need to know the structure / schema / blocks / tree of the repository.",
   annotations: {
     title: "Retrieve BaseHub Repository Structure",
     readOnlyHint: true,
