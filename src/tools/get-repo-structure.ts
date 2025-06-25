@@ -1,7 +1,7 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
-import { BASEHUB_BLOCK_TYPES } from "../utils";
+import { BASEHUB_BLOCK_TYPES } from "../utils/constants";
 
 // Define the schema for tool parameters
 export const schema = {
