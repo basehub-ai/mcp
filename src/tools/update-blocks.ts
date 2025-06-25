@@ -1,22 +1,19 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
+import { UpdateOpSchema } from "@basehub/mutation-api-helpers";
 
 export const schema = {
   data: z
-    .array(
-      z
-        .object({ id: z.string().describe("ID of the block to update") })
-        .passthrough()
-    )
+    .array(UpdateOpSchema.omit({ children: true }))
     .describe(
-      "Array of update objects, each with at least 'id', 'type', and update fields."
+      "Array of update objects, each with at least 'id', 'type', and update fields. block 'type' key is crucial to make updates, see block types for reference."
     ),
   autoCommit: z
     .string()
     .optional()
     .describe(
-      "Optional commit message. If provided, the transaction will be auto-committed with this message."
+      "Optional commit message. If provided, the transaction will be auto-committed with this message. Don't provide unless the user asks for it."
     ),
 };
 
@@ -25,9 +22,9 @@ export const metadata = {
   description: "Update one or more BaseHub blocks in a single transaction.",
   annotations: {
     title: "Update BaseHub Blocks",
-    readOnlyHint: true,
+    readOnlyHint: false,
     destructiveHint: false,
-    idempotentHint: true,
+    idempotentHint: false,
   },
 };
 
@@ -35,19 +32,32 @@ export default async function updateBlocks({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
-  const result = await basehub().mutation({
-    transaction: {
-      __args: {
-        data: data.map((item) => ({ ...item, type: "update" })),
-        ...(autoCommit ? { autoCommit } : {}),
+  try {
+    const result = await basehub().mutation({
+      transaction: {
+        __args: {
+          data: data.map((item) => ({ ...item, type: "update" })),
+          ...(autoCommit ? { autoCommit } : {}),
+        },
+        message: true,
+        status: true,
+        duration: true,
       },
-      message: true,
-      status: true,
-      duration: true,
-    },
-  });
-
-  return {
-    content: [{ type: "text", text: JSON.stringify(result) }],
-  };
+    });
+    return {
+      content: [{ type: "text", text: JSON.stringify(result) }],
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: `Error: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        },
+      ],
+    };
+  }
 }
