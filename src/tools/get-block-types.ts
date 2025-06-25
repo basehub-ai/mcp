@@ -8,7 +8,7 @@ export const schema = {};
 export const metadata = {
   name: "get_block_types",
   description:
-    "Retrieve all block types and its uses in a comprehensive markdown content. Useful for writing BaseHub mutations.",
+    "Retrieve all block types and its uses in a comprehensive markdown content. ONLY FOR WRITING BASEHUB MUTATIONS.",
   annotations: {
     title: "Get Block Types",
     readOnlyHint: true,
