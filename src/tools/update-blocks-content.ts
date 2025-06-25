@@ -40,7 +40,7 @@ Example input:
   },
 };
 
-export default async function smartUpdateBlock({
+export default async function updateBlocksContent({
   updates,
   autoCommit,
 }: InferSchema<typeof schema>) {
@@ -68,8 +68,6 @@ export default async function smartUpdateBlock({
     const response = (await basehub().query(query)) as {
       _componentInstances?: Record<string, { items?: Array<{ _id?: string }> }>;
     };
-
-    console.log("test", JSON.stringify(response));
 
     if (!response._componentInstances) {
       throw new Error("Failed to fetch component instances");
@@ -116,6 +114,6 @@ export default async function smartUpdateBlock({
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";
-    throw new Error(`Smart update block failed: ${errorMessage}`);
+    throw new Error(`update blocks content failed: ${errorMessage}`);
   }
 }
