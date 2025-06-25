@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.11.4",
-    "basehub": "^9.0.6",
+    "basehub": "^9.0.16",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.4",
     "xmcp": "latest",
