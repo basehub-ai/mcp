@@ -225,4 +225,5 @@ export const authenticate = async (token: string) => {
   };
 };
 
-export const BASEHUB_API_URL = "https://api.basehub.com";
+export const BASEHUB_API_URL =
+  process.env.BASEHUB_API_URL ?? "http://api.basehub.com/graphql";

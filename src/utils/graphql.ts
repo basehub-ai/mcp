@@ -20,7 +20,7 @@ export const fetchBaseHubGraphQL = async <
     ? { data: z.infer<DataSchema>; errors: any }
     : { data: any; errors: any }
 > => {
-  const result = await fetch(BASEHUB_API_URL + "/graphql", {
+  const result = await fetch(BASEHUB_API_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -34,11 +34,13 @@ export const fetchBaseHubGraphQL = async <
     throw new Error("Failed to fetch from GraphQL");
   });
 
+  console.log({ result, token });
   if (result.status !== 200) {
     throw new Error(`${result.status} – ${result.statusText}`);
   }
 
   const json = await result.json();
+  console.log({ json });
   const parsed = z
     .object({ data: dataSchema ? dataSchema : z.any(), errors: z.any() })
     .safeParse(json);
