@@ -13,12 +13,6 @@ export const schema = {
     .string()
     .optional()
     .describe("Optional description for the new branch"),
-  autoCommit: z
-    .string()
-    .optional()
-    .describe(
-      "Optional commit message. If provided, the transaction will be auto-committed with this message."
-    ),
 };
 
 // Define tool metadata
@@ -39,7 +33,6 @@ export default async function createBranch({
   baseBranchName,
   branchName,
   description,
-  autoCommit,
 }: InferSchema<typeof schema>) {
   try {
     const { write: token, ref } = await authenticate(
@@ -57,7 +50,6 @@ export default async function createBranch({
               description: description || "",
             },
           ],
-          ...(autoCommit ? { autoCommit } : {}),
         },
         message: true,
         status: true,
