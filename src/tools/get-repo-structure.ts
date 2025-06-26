@@ -1,7 +1,8 @@
-import { mcpRequest, BASEHUB_BLOCK_TYPES, authenticate } from "../utils";
+import { authenticate } from "../utils/constants";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { BASEHUB_BLOCK_TYPES } from "../utils/constants";
+import { basehub } from "basehub";
 
 // Define the schema for tool parameters
 export const schema = {

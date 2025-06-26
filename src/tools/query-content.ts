@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { fetchBaseHubGraphQL } from "../utils/graphql";
+import { authenticate } from "../utils/constants";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -39,11 +40,13 @@ export default async function queryContentRepository({
   variables,
 }: InferSchema<typeof schema>) {
   try {
+    const { read: token, ref } = await authenticate(
+      "bshb_mcp_F8sqfEhxrNPEWmU5LRIz1"
+    );
     const result = await fetchBaseHubGraphQL({
-      token:
-        "bshb_pk_taqowmfs9qp4z8hg7t4kqrr4l6wm9eojydpsvew0t17nqt8h0tcwzzno5axt32wk",
+      token,
       query,
-      branchName: "main",
+      branchName: ref.name ?? "main",
       variables,
     });
 

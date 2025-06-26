@@ -1,4 +1,4 @@
-import { authenticate } from "../utils";
+import { authenticate } from "../utils/constants";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { UpdateOpSchema } from "@basehub/mutation-api-helpers";
