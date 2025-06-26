@@ -1,7 +1,8 @@
-import { basehub } from "basehub";
+import { authenticate } from "../utils";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { UpdateOpSchema } from "@basehub/mutation-api-helpers";
+import { basehub } from "basehub";
 
 export const schema = {
   data: z
@@ -33,7 +34,10 @@ export default async function updateBlocks({
   autoCommit,
 }: InferSchema<typeof schema>) {
   try {
-    const result = await basehub().mutation({
+    const { write: token, ref } = await authenticate(
+      "bshb_mcp_F8sqfEhxrNPEWmU5LRIz1"
+    );
+    const result = await basehub({ token, ref: ref.name }).mutation({
       transaction: {
         __args: {
           data: data.map((item) => ({ ...item, type: "update" })),

@@ -1,8 +1,8 @@
-import { basehub } from "basehub";
+import { mcpRequest, basehubMutationResult, authenticate } from "../utils";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { DeleteOpSchema } from "@basehub/mutation-api-helpers";
-import { basehubMutationResult } from "../utils";
+import { basehub } from "basehub";
 
 export const schema = {
   data: z
@@ -32,7 +32,10 @@ export default async function deleteBlocks({
   autoCommit,
 }: InferSchema<typeof schema>) {
   try {
-    const result = await basehub().mutation({
+    const { write: token, ref } = await authenticate(
+      "bshb_mcp_F8sqfEhxrNPEWmU5LRIz1"
+    );
+    const result = await basehub({ token, ref: ref.name }).mutation({
       transaction: {
         __args: {
           data: data.map((data) => ({ ...data, type: "delete" })),
@@ -45,14 +48,9 @@ export default async function deleteBlocks({
     });
 
     const parsedResult = basehubMutationResult.parse(result);
-    if (parsedResult.transaction.status === "Failed") {
-      throw new Error(
-        `Transaction failed: ${parsedResult.transaction.message}`
-      );
-    }
 
     return {
-      content: [{ type: "text", text: JSON.stringify(parsedResult) }],
+      content: [{ type: "text", text: JSON.stringify(result) }],
     };
   } catch (error) {
     return {

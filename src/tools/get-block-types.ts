@@ -1,5 +1,5 @@
 import { type InferSchema } from "xmcp";
-import { BASEHUB_BLOCK_TYPES } from "../utils";
+import { BASEHUB_BLOCK_TYPES, mcpRequest, authenticate } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {};
@@ -18,13 +18,27 @@ export const metadata = {
 };
 
 // Tool implementation
-export default async function createBlocks({}: InferSchema<typeof schema>) {
-  return {
-    content: [
-      {
-        type: "text",
-        text: BASEHUB_BLOCK_TYPES,
-      },
-    ],
-  };
+export default async function getBlockTypes() {
+  try {
+    return {
+      content: [
+        {
+          type: "text",
+          text: BASEHUB_BLOCK_TYPES,
+        },
+      ],
+    };
+  } catch (error) {
+    return {
+      isError: true,
+      content: [
+        {
+          type: "text",
+          text: `Error: ${
+            error instanceof Error ? error.message : String(error)
+          }`,
+        },
+      ],
+    };
+  }
 }

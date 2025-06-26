@@ -178,3 +178,55 @@ export const BASEHUB_BLOCK_TYPES = `
     - **Usage**: \`fieldName { code language }\`
     - **Example**: Code blocks in documentation.
     `;
+
+const basehubMcpEndpoint = process.env.BASEHUB_MCP_ENDPOINT;
+if (!basehubMcpEndpoint) {
+  throw new Error("BASEHUB_MCP_ENDPOINT is not set");
+}
+
+type MCPPayload =
+  | {
+      op: "make-changes";
+      transaction: string;
+      autoCommit?: string;
+    }
+  | {
+      op: "ref-state";
+      transaction: { op: "get-current-ref" } | { op: "checkout"; ref: string };
+    }
+  | {
+      op: "query";
+      data: any;
+    };
+
+export async function mcpRequest(token: string, payload: MCPPayload) {
+  const response = await fetch(basehubMcpEndpoint!, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const result = await response.json();
+  if (result.op === "error") throw new Error(result.error);
+  return result;
+}
+
+export const authenticate = async (token: string) => {
+  const response = await fetch("http://localhost:3000/api/mcp/authenticate", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ token }),
+  });
+
+  const result = await response.json();
+  return result as {
+    read: string;
+    write: string;
+    ref: { type: "branch" | "commit"; id: string; name?: string };
+  };
+};
