@@ -31,7 +31,7 @@ export default async function getCurrentRef({}: InferSchema<typeof schema>) {
         content: [
           {
             type: "text",
-            text: `Error getting current ref: ${"Unknown error"}`,
+            text: `Error getting current ref: "Missing ref object"`,
           },
         ],
       };
