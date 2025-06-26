@@ -1,12 +1,3 @@
-import { z } from "zod";
-
-export const basehubMutationResult = z.object({
-  transaction: z.object({
-    message: z.string().optional(),
-    status: z.string(),
-  }),
-});
-
 // TODO: Some blocks as event or workflow are not present since we don't yet support them in the Mutation API.
 export const BASEHUB_BLOCK_TYPES = `
     IMPORTANT: When writing block types for mutations, they go in kebab-case. E.g: RichText is written as 'rich-text'.
@@ -230,3 +221,4 @@ export const authenticate = async (token: string) => {
     ref: { type: "branch" | "commit"; id: string; name?: string };
   };
 };
+export const BASEHUB_API_URL = "https://api.basehub.com";
