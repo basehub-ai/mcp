@@ -1,4 +1,5 @@
-export const BASEHUB_APP_URL = "http://basehub.dev";
+export const BASEHUB_APP_URL = "http://localhost:3000";
+// export const BASEHUB_APP_URL = "http://basehub.dev";
 
 // TODO: Some blocks as event or workflow are not present since we don't yet support them in the Mutation API.
 export const BASEHUB_BLOCK_TYPES = `

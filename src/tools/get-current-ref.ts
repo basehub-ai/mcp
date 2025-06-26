@@ -21,7 +21,9 @@ export const metadata = {
 export default async function getCurrentRef({}: InferSchema<typeof schema>) {
   try {
     // Call the BaseHub MCP manage endpoint to get current ref
-    const { ref } = await authenticate("bshb_mcp_F8sqfEhxrNPEWmU5LRIz1");
+    const { ref } = await authenticate(
+      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
+    );
 
     if (!ref) {
       return {

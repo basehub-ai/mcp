@@ -34,7 +34,7 @@ export default async function deleteBlocks({
 }: InferSchema<typeof schema>) {
   try {
     const { write: token, ref } = await authenticate(
-      "bshb_mcp_F8sqfEhxrNPEWmU5LRIz1"
+      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
     );
     const result = await basehub({ token, ref: ref.name }).mutation({
       transaction: {

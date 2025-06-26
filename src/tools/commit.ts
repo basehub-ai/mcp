@@ -1,7 +1,7 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
-import { authenticate } from "../utils";
+import { authenticate } from "../utils/constants";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -36,7 +36,7 @@ export default async function commit({
 }: InferSchema<typeof schema>) {
   try {
     const { write: token, ref } = await authenticate(
-      "bshb_mcp_F8sqfEhxrNPEWmU5LRIz1"
+      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
     );
     // Commit pending transactions with the provided message
     const result = await basehub({ token, ref: ref.name }).mutation({

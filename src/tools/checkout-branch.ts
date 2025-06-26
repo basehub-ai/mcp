@@ -32,7 +32,7 @@ export default async function checkoutBranch({
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${"bshb_mcp_F8sqfEhxrNPEWmU5LRIz1"}`,
+        Authorization: `Bearer ${"bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"}`,
       },
       body: JSON.stringify({
         op: "checkout",

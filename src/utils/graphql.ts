@@ -2,7 +2,7 @@ import { z } from "zod";
 import { BASEHUB_API_URL } from "./constants";
 
 export const fetchBaseHubGraphQL = async <
-  DataSchema extends z.ZodSchema | undefined = undefined
+  DataSchema extends z.ZodSchema | undefined = undefined,
 >({
   token,
   query,
@@ -29,12 +29,16 @@ export const fetchBaseHubGraphQL = async <
       "x-basehub-ref": branchName,
     },
     body: JSON.stringify({ query, variables }),
+  }).catch((error) => {
+    console.log(error);
+    throw new Error("Failed to fetch from GraphQL");
   });
+
   const json = await result.json();
   const parsed = z
     .object({ data: dataSchema ? dataSchema : z.any(), errors: z.any() })
     .safeParse(json);
-
+  console.log(parsed);
   if (!parsed.success) {
     console.log(parsed.error.format());
     console.log(json);
