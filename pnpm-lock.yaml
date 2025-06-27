@@ -15,8 +15,8 @@ importers:
         specifier: ^1.11.4
         version: 1.12.3
       basehub:
-        specifier: 9.0.9
-        version: 9.0.9(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3)
+        specifier: ^9.0.16
+        version: 9.0.16(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3)
       ts-loader:
         specifier: ^9.4.2
         version: 9.5.2(typescript@5.8.3)(webpack@5.99.9(@swc/core@1.12.1))
@@ -1014,8 +1014,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  basehub@9.0.9:
-    resolution: {integrity: sha512-WzApoUN9ax3EUYpwqeR01QDVMziHFDr+4W0oLPnf6DkjGvbJiKmXGtYEKab2HMvGabjy3SDakBoLDSlACtQuJQ==}
+  basehub@9.0.16:
+    resolution: {integrity: sha512-Akwmy//E1oz+8cm7KGtBqg8hmXTlBRJhKHY2fCrR9peUCX4abUHJFLdCEI+LDLnOUd8VwzlCOzzlWw9WCOBhog==}
     hasBin: true
 
   binary-extensions@2.3.0:
@@ -3770,7 +3770,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  basehub@9.0.9(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3):
+  basehub@9.0.16(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3):
     dependencies:
       '@basehub/mutation-api-helpers': 2.0.11
       '@radix-ui/react-slot': 1.2.3(react@18.3.1)
