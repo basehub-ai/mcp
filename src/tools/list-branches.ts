@@ -1,5 +1,5 @@
 import { basehub } from "basehub";
-import { mcpRequest, authenticate } from "../utils";
+import { authenticate } from "../utils/constants";
 import { z } from "zod";
 
 export const schema = {
@@ -48,16 +48,33 @@ export default async function listBranches({
       },
     });
 
+    const branchesResponse = z
+      .object({
+        _sys: z.object({
+          branches: z.object({
+            items: z.array(
+              z.object({
+                id: z.string(),
+                name: z.string(),
+                createdAt: z.string(),
+              })
+            ),
+          }),
+        }),
+      })
+      .parse(result);
+
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(result._sys.branches.items),
+          text: JSON.stringify(branchesResponse._sys.branches.items),
         },
       ],
     };
   } catch (error) {
     return {
+      isError: true,
       content: [{ type: "text", text: JSON.stringify(error) }],
     };
   }
