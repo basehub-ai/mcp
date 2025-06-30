@@ -10,6 +10,12 @@ export const authenticate = async (token: string) => {
     body: JSON.stringify({ token }),
   });
 
+  if (!response.ok) {
+    throw new Error(
+      `Failed to authenticate: ${response.status} ${response.statusText}`
+    );
+  }
+
   const result = await response.json();
   const schema = z.object({
     read: z.string(),

@@ -13,9 +13,9 @@ export const schema = {
 
 export const metadata = {
   name: "list_branches",
-  description: "List all branches in the current repository.",
+  description: "List all branches in the current BaseHub repository.",
   annotations: {
-    title: "List Branches",
+    title: "List BaseHub Branches",
     readOnlyHint: true,
     destructiveHint: false,
     idempotentHint: true,
