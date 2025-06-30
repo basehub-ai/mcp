@@ -9,7 +9,7 @@ export const schema = {};
 export const metadata = {
   name: "get_current_ref",
   description: `Get the current branch/ref in BaseHub. 
-  This returns information about the currently active branch.`,
+This returns information about the currently active branch.`,
   annotations: {
     title: "Get Current BaseHub Branch",
     readOnlyHint: true,

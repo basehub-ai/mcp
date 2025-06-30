@@ -19,7 +19,7 @@ export const schema = {
 
 // Define tool metadata
 export const metadata = {
-  name: "query_content_repository",
+  name: "query_content",
   description: `Query the BaseHub content repository. Use this as you need to get content created by the user, or specific IDs for subsequent content changes.
 When querying content:
 - Use proper GraphQL syntax

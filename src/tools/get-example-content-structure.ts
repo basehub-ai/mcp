@@ -54,7 +54,7 @@ export const schema = {
 
 // Define tool metadata
 export const metadata = {
-  name: "get_example_repository_structure",
+  name: "get_example_content_structure",
   description: `Get an XML representation of the structure of one of BaseHub example repos. This is not directly relevant to the user's repo, but it might serve as inspiration of how to create structures in BaseHub.
 
 Select from:
