@@ -9,12 +9,6 @@ export const schema = {
   message: z
     .string()
     .describe("The commit message describing the changes being committed"),
-  force: z
-    .boolean()
-    .optional()
-    .describe(
-      "Whether to force the commit even if there are validation errors (defaults to false)"
-    ),
 };
 
 // Define tool metadata
@@ -31,10 +25,7 @@ export const metadata = {
 };
 
 // Tool implementation
-export default async function commit({
-  message,
-  force,
-}: InferSchema<typeof schema>) {
+export default async function commit({ message }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
     const { write: writeToken, ref, userId } = await authenticate(mcpToken);
