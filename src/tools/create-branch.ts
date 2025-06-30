@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
-import { authenticate } from "../utils/constants";
+import { authenticate } from "../utils/auth";
 import { basehub } from "basehub";
 import { getMcpToken } from "../utils";
 

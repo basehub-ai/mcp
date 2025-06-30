@@ -1,5 +1,5 @@
 import { type InferSchema } from "xmcp";
-import { authenticate } from "../utils/constants";
+import { authenticate } from "../utils/auth";
 import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters (no parameters needed for get-current-ref)

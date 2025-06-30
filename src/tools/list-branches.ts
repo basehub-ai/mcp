@@ -1,5 +1,5 @@
 import { basehub } from "basehub";
-import { authenticate } from "../utils/constants";
+import { authenticate } from "../utils/auth";
 import { z } from "zod";
 import { getMcpToken } from "../utils";
 

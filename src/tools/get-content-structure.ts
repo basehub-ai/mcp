@@ -1,4 +1,4 @@
-import { authenticate } from "../utils/constants";
+import { authenticate } from "../utils/auth";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { BASEHUB_BLOCK_TYPES } from "../utils/constants";

@@ -1,7 +1,7 @@
 import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
-import { authenticate } from "../utils/constants";
+import { authenticate } from "../utils/auth";
 import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters

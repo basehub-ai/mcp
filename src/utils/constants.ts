@@ -1,7 +1,7 @@
-import z from "zod";
-
-export const BASEHUB_APP_URL = "http://localhost:3000";
-// export const BASEHUB_APP_URL = "http://basehub.dev";
+export const BASEHUB_APP_URL =
+  process.env.BASEHUB_APP_URL ?? "http://basehub.com";
+export const BASEHUB_API_URL =
+  process.env.BASEHUB_API_URL ?? "http://api.basehub.com/graphql";
 
 // TODO: Some blocks as event or workflow are not present since we don't yet support them in the Mutation API.
 export const BASEHUB_BLOCK_TYPES = `
@@ -174,30 +174,3 @@ export const BASEHUB_BLOCK_TYPES = `
     - **Usage**: \`fieldName { code language }\`
     - **Example**: Code blocks in documentation.
     `;
-
-export const authenticate = async (token: string) => {
-  const response = await fetch(`${BASEHUB_APP_URL}/api/mcp/authenticate`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ token }),
-  });
-
-  const result = await response.json();
-  const schema = z.object({
-    read: z.string(),
-    write: z.string(),
-    ref: z.object({
-      type: z.enum(["branch", "commit"]),
-      id: z.string(),
-      name: z.string().optional(),
-    }),
-    userId: z.string(),
-  });
-
-  return schema.parse(result);
-};
-
-export const BASEHUB_API_URL =
-  process.env.BASEHUB_API_URL ?? "http://api.basehub.com/graphql";
