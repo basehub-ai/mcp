@@ -6,17 +6,14 @@
     "node": ">=20.0.0"
   },
   "scripts": {
-    "build": "xmcp build --vercel",
+    "build": "xmcp build",
     "dev": "xmcp dev",
-    "start-http": "node dist/streamable-http.js"
+    "start": "node dist/http.js"
   },
   "dependencies": {
     "@basehub/mutation-api-helpers": "2.1.2",
-    "@modelcontextprotocol/sdk": "^1.11.4",
     "basehub": "9.0.9",
-    "ts-loader": "^9.4.2",
-    "typescript": "^5.0.4",
-    "xmcp": "latest",
+    "xmcp": "^0.0.15",
     "zod": "^3.24.4"
   },
   "devDependencies": {

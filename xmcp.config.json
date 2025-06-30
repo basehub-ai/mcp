@@ -1,7 +1,0 @@
-{
-  "streamable-http": {
-    "port": 3002,
-    "stateless": true,
-    "debug": true
-  }
-}
