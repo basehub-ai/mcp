@@ -9,7 +9,7 @@ export const basehubMutationResult = z.object({
 });
 
 export const getMcpToken = () => {
-  const mcpToken = headers()["Authorization"];
+  const mcpToken = headers()["authorization"];
   if (typeof mcpToken !== "string") {
     throw new Error("No token provided");
   }
