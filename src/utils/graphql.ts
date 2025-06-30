@@ -6,6 +6,7 @@ export const fetchBaseHubGraphQL = async <
 >({
   token,
   query,
+  draft,
   branchName,
   variables,
   dataSchema,
@@ -13,6 +14,7 @@ export const fetchBaseHubGraphQL = async <
   token: string;
   query: string;
   branchName: string;
+  draft: boolean;
   variables?: Record<string, any>;
   dataSchema?: DataSchema;
 }): Promise<
@@ -25,7 +27,7 @@ export const fetchBaseHubGraphQL = async <
     headers: {
       "Content-Type": "application/json",
       "x-basehub-token": token,
-      "x-basehub-draft": "true",
+      "x-basehub-draft": draft ? "true" : "false",
       "x-basehub-ref": branchName,
     },
     body: JSON.stringify({ query, variables }),

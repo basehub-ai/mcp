@@ -11,6 +11,12 @@ export const schema = {
     .describe(
       "The GraphQL query to execute against the BaseHub content repository."
     ),
+  draft: z
+    .boolean()
+    .optional()
+    .describe(
+      "Whether to query the draft content repository. Defaults to true."
+    ),
   variables: z
     .record(z.string(), z.any())
     .optional()
@@ -39,6 +45,7 @@ When querying content:
 export default async function queryContentRepository({
   query,
   variables,
+  draft = true,
 }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
@@ -46,6 +53,7 @@ export default async function queryContentRepository({
     const result = await fetchBaseHubGraphQL({
       token,
       query,
+      draft,
       branchName: ref.name ?? "main",
       variables,
     });
