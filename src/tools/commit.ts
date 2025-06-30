@@ -37,7 +37,7 @@ export default async function commit({
 }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
-    const { write: writeToken, ref } = await authenticate(mcpToken);
+    const { write: writeToken, ref, userId } = await authenticate(mcpToken);
     // Commit pending transactions with the provided message
     const result = await basehub({ token: writeToken, ref: ref.name }).mutation(
       {
@@ -50,6 +50,7 @@ export default async function commit({
                 message,
               },
             ],
+            authorId: userId,
           },
           message: true,
           status: true,

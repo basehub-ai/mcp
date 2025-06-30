@@ -37,11 +37,12 @@ export default async function createBranch({
 }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
-    const { write: token, ref } = await authenticate(mcpToken);
+    const { write: token, ref, userId } = await authenticate(mcpToken);
 
     const result = await basehub({ token, ref: ref.name }).mutation({
       transaction: {
         __args: {
+          authorId: userId,
           data: [
             {
               type: "create-branch",

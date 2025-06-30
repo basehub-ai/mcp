@@ -36,10 +36,11 @@ export default async function updateBlocks({
 }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
-    const { write: token, ref } = await authenticate(mcpToken);
+    const { write: token, ref, userId } = await authenticate(mcpToken);
     const result = await basehub({ token, ref: ref.name }).mutation({
       transaction: {
         __args: {
+          authorId: userId,
           data: data.map((item) => ({ ...item, type: "update" })),
           ...(autoCommit ? { autoCommit } : {}),
         },

@@ -1,3 +1,5 @@
+import z from "zod";
+
 export const BASEHUB_APP_URL = "http://localhost:3000";
 // export const BASEHUB_APP_URL = "http://basehub.dev";
 
@@ -218,11 +220,18 @@ export const authenticate = async (token: string) => {
   });
 
   const result = await response.json();
-  return result as {
-    read: string;
-    write: string;
-    ref: { type: "branch" | "commit"; id: string; name?: string };
-  };
+  const schema = z.object({
+    read: z.string(),
+    write: z.string(),
+    ref: z.object({
+      type: z.enum(["branch", "commit"]),
+      id: z.string(),
+      name: z.string().optional(),
+    }),
+    userId: z.string(),
+  });
+
+  return schema.parse(result);
 };
 
 export const BASEHUB_API_URL =
