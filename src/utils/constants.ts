@@ -10,25 +10,27 @@ export const BASEHUB_BLOCK_TYPES = `
     
     # BaseHub Block Types
     
-    ## Document
+    ## document
     Container for other blocks. Access directly by field name.
-    - **Value Type**: Defined by its children (array of blocks)
-    - **Usage**: \`fieldName { childField }\`
+    - **Value Type**: Defined by its children (array of blocks).
+    - **Mutation Usage**: \`fieldName: { ... }\` where the object contains the values for the children blocks.
+    - **Query Usage**: \`fieldName { childFieldName, _sys { id } }\`
     - **Example**: Used as a root or section block to group other blocks.
     
     ---
     
-    ## Text  
+    ## text  
     Simple text field.
     - **Value Type**: \`string\`
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`"some string"\`
+    - **Query Usage**: \`fieldName\`
     - **Example**: Titles, short descriptions, or any plain text.
     
     ---
     
-    ## RichText
+    ## rich-text
     Rich text with multiple output formats.
-    - **Value Type**:  
+    - **Mutation Value Type**:  
       \`\`\`ts
       {
         format: 'markdown' | 'html';
@@ -40,60 +42,71 @@ export const BASEHUB_BLOCK_TYPES = `
         value: string | unknown;
       }
       \`\`\`
-    - **Usage**:  
+    - **Mutation Usage**:  
       - Markdown: \`{ format: "markdown", value: "# Hello" }\`
       - HTML: \`{ format: "html", value: "<h1>Hello</h1>" }\`
       - JSON: \`{ format: "json", value: { ... } }\`
+    - **Query Usage**:
+      - Get HTML: \`fieldName { html }\`
+      - Get Markdown: \`fieldName { markdown }\`
+      - Get JSON: \`fieldName { json { content, toc } }\`
+      - Get Plain Text: \`fieldName { plainText }\`
+      - Get Reading Time: \`fieldName { readingTime(wpm: 200) }\`
     - **Example**: Perfect for blog content, descriptions, or any formatted text.
     
     ---
     
-    ## Number
+    ## number
     Numeric value.
     - **Value Type**: \`number\`
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`123\`
+    - **Query Usage**: \`fieldName\`
     - **Example**: Quantities, scores, or any numeric data.
     
     ---
     
-    ## Boolean
+    ## boolean
     True/false value.
     - **Value Type**: \`boolean\`
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`true\`
+    - **Query Usage**: \`fieldName\`
     - **Example**: Toggles, flags, or status indicators.
     
     ---
     
-    ## Date
+    ## date
     Date (optionally with time).
     - **Value Type**: \`string\` (ISO date string)
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`"2023-01-01T00:00:00.000Z"\`
+    - **Query Usage**: \`fieldName\`
     - **Example**: Timestamps, deadlines, or event dates.
     
     ---
     
-    ## Select
+    ## select
     Single or multiple choice from a set of options.
     - **Value Type**: \`string\` or \`string[]\` or \`null\`
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`"option1"\` or \`["option1", "option2"]\`
+    - **Query Usage**: \`fieldName\`
     - **Example**: Tags, categories, or dropdowns.
     
     ---
     
-    ## Reference
+    ## reference
     Reference to other blocks.
-    - **Value Type**:  
+    - **Mutation Value Type**:  
       - \`string\` (block ID)
       - or \`{ type: "instance", ... }\` (for nested/instance references)
       - or an array of the above
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`"block-id"\`
+    - **Query Usage**: \`fieldName { ... on ReferencedType { fieldName } }\`
     - **Example**: Linking to users, documents, or other entities.
     
     ---
     
-    ## Media
-    File upload (image, video, audio, or generic file).
-    - **Value Type**:  
+    ## media
+    File upload (image, video, audio, or generic file). A media field resolves to a union of Image, Video, Audio, and File types.
+    - **Mutation Value Type**:  
       \`\`\`ts
       {
         url: string;
@@ -102,37 +115,62 @@ export const BASEHUB_BLOCK_TYPES = `
         duration?: number;
       }
       \`\`\`
-    - **Usage**: \`fieldName { url fileName altText duration }\`
+    - **Mutation Usage**: \`{ url: "...", fileName: "..." }\`
+    - **Query Usage**:
+      \`\`\`graphql
+      fieldName {
+        ... on BlockImage {
+          url(width: 200)
+          alt
+        }
+        ... on BlockVideo {
+          url
+          duration
+        }
+      }
+      \`\`\`
     - **Example**: Profile pictures, attachments, or media galleries.
     
     ---
     
-    ## List / Collection
+    ## list (Collection)
     Array of blocks of a specific type.
-    - **Value Type**:  
+    - **Mutation Value Type**:  
       \`\`\`ts
       {
         template: string | Array<{ type: string; ... }>;
         rows?: Array<{ type: "instance"; ... }>;
       }
       \`\`\`
-    - **Usage**: \`fieldName { ... }\`
+    - **Mutation Usage**: Depends on the list's contents.
+    - **Query Usage**:
+      \`\`\`graphql
+      fieldName(first: 10) {
+        items {
+          # fields of the items
+        }
+        _meta {
+          totalCount
+        }
+      }
+      \`\`\`
     - **Example**: Item lists, tables, or repeatable sections.
     
     ---
     
-    ## Component
+    ## component
     Reusable block with custom display options.
     - **Value Type**:  
       \`\`\`ts
       Array<{ type: string; ... }>
       \`\`\`
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`{ ... }\` with the component's field values.
+    - **Query Usage**: \`fieldName { childFieldName }\`
     - **Example**: Design system components, templates.
     
     ---
     
-    ## Instance
+    ## instance
     Instance of a component block.
     - **Value Type**:  
       \`\`\`ts
@@ -141,36 +179,64 @@ export const BASEHUB_BLOCK_TYPES = `
         value?: Record<string, unknown> | null;
       }
       \`\`\`
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`{ mainComponentId: "...", value: { ... } }\`
+    - **Query Usage**: \`fieldName { ... on ComponentType { childFieldName } }\`
     - **Example**: Placing a component in a document.
     
     ---
     
-    ## Color
+    ## color
     Color value.
-    - **Value Type**: \`string\`
-    - **Usage**: \`fieldName\`
+    - **Value Type**: \`string\` (e.g. "#RRGGBB")
+    - **Mutation Usage**: \`"#FF5733"\`
+    - **Query Usage**: \`fieldName { hex rgb hsl }\`
     - **Example**: Theme colors, labels.
     
     ---
     
-    ## Icon
+    ## icon
     Icon value.
     - **Value Type**: \`string\`
-    - **Usage**: \`fieldName\`
+    - **Mutation Usage**: \`"icon-name"\`
+    - **Query Usage**: \`fieldName\`
     - **Example**: Icon pickers, visual indicators.
     
     ---
     
-    ## CodeSnippet
+    ## code-snippet
     Code with language.
-    - **Value Type**:  
+    - **Mutation Value Type**:  
       \`\`\`ts
       {
         code: string;
         language?: string | null;
       }
       \`\`\`
-    - **Usage**: \`fieldName { code language }\`
+    - **Mutation Usage**: \`{ code: "...", language: "..." }\`
+    - **Query Usage**: \`fieldName { code language html }\`
     - **Example**: Code blocks in documentation.
+
+    ---
+
+    ## og-image
+    Open Graph image.
+    - **Mutation Usage**: Not supported for mutations.
+    - **Query Usage**: \`fieldName { url width height }\`
+    - **Example**: Generating social sharing images.
+    
+    ---
+
+    ## event
+    Analytics event tracking.
+    - **Mutation Usage**: Not supported for mutations.
+    - **Query Usage**: \`fieldName { ingestKey, adminKey, schema }\`. The \`adminKey\` should not be exposed publicly.
+    - **Example**: Tracking button clicks or page views.
+
+    ---
+
+    ## workflow
+    Custom workflows.
+    - **Mutation Usage**: Not supported for mutations.
+    - **Query Usage**: \`fieldName { webhookSecret }\`
+    - **Example**: Triggering custom server-side actions.
     `;
