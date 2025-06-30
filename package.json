@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@basehub/mutation-api-helpers": "2.1.2",
-    "basehub": "9.0.9",
+    "basehub": "9.0.19",
     "xmcp": "^0.0.15",
     "zod": "^3.24.4"
   },

@@ -12,8 +12,8 @@ importers:
         specifier: 2.1.2
         version: 2.1.2(zod@3.25.67)
       basehub:
-        specifier: 9.0.9
-        version: 9.0.9(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3)
+        specifier: 9.0.19
+        version: 9.0.19(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3)(zod@3.25.67)
       xmcp:
         specifier: ^0.0.15
         version: 0.0.15(@types/node@24.0.7)(typescript@5.8.3)
@@ -38,9 +38,6 @@ packages:
   '@babel/runtime@7.27.6':
     resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
     engines: {node: '>=6.9.0'}
-
-  '@basehub/mutation-api-helpers@2.0.11':
-    resolution: {integrity: sha512-OWudSZELX/XOchBxmifu5bAZ+88E52OX2sz9O8ryGnF1COkQ90vQVV75ZguxY1SHjX7v9jfG5AUaop0muCX3Wg==}
 
   '@basehub/mutation-api-helpers@2.1.2':
     resolution: {integrity: sha512-qqJM1Lc37JYX0u4SL5OunZkU3TBijoCRHuvT4ju8MIYHVtv0ii3TViIDhCYKO92CcjGOCkd5u014H/fZB5H8uA==}
@@ -1018,8 +1015,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  basehub@9.0.9:
-    resolution: {integrity: sha512-WzApoUN9ax3EUYpwqeR01QDVMziHFDr+4W0oLPnf6DkjGvbJiKmXGtYEKab2HMvGabjy3SDakBoLDSlACtQuJQ==}
+  basehub@9.0.19:
+    resolution: {integrity: sha512-dBxTvXOGHQ/uPGDFDQl0VgsDNGsN+CTIwBt1L1/J20vV6ji4nPKIdX5DjhG2/LIqZKMnGRMcLBkOnQuH0xtv7A==}
     hasBin: true
 
   binary-extensions@2.3.0:
@@ -2235,11 +2232,6 @@ packages:
     resolution: {integrity: sha512-ueGLflrrnvwB3xuo/uGob5pd5FN7l0MsLf0Z87o/UQmRtwjvfylfc9MurIxRAWywCYTgrvpXBcqjV4OfCYGCIQ==}
     engines: {node: '>=16.20.0'}
 
-  prettier@3.0.3:
-    resolution: {integrity: sha512-L/4pUDMxcNa8R/EthV08Zt42WBO4h1rarVtK0K+QJG0X187OLo7l699jWw0GKuwzkPQ//jMFA/8Xm6Fh3J/DAg==}
-    engines: {node: '>=14'}
-    hasBin: true
-
   pretty-ms@9.2.0:
     resolution: {integrity: sha512-4yf0QO/sllf/1zbZWYnvWw3NxCQwLXKzIj0G849LSufP15BXKM0rbD2Z3wVnkMfjdn/CB0Dpp444gYAACdsplg==}
     engines: {node: '>=18'}
@@ -2866,8 +2858,6 @@ snapshots:
   '@babel/helper-validator-identifier@7.27.1': {}
 
   '@babel/runtime@7.27.6': {}
-
-  '@basehub/mutation-api-helpers@2.0.11': {}
 
   '@basehub/mutation-api-helpers@2.1.2(zod@3.25.67)':
     dependencies:
@@ -3796,9 +3786,9 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  basehub@9.0.9(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3):
+  basehub@9.0.19(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3)(zod@3.25.67):
     dependencies:
-      '@basehub/mutation-api-helpers': 2.0.11
+      '@basehub/mutation-api-helpers': 2.1.2(zod@3.25.67)
       '@radix-ui/react-slot': 1.2.3(react@18.3.1)
       '@shikijs/transformers': 1.17.7
       '@xmldom/xmldom': 0.9.8
@@ -3815,7 +3805,6 @@ snapshots:
       lodash.get: 4.4.2
       lodash.uniq: 4.5.0
       mkdirp: 3.0.1
-      prettier: 3.0.3
       pusher-js: 8.4.0
       rimraf: 6.0.1
       server-only: 0.0.1
@@ -3828,6 +3817,7 @@ snapshots:
       - react
       - supports-color
       - typescript
+      - zod
 
   binary-extensions@2.3.0: {}
 
@@ -5219,8 +5209,6 @@ snapshots:
   pkce-challenge@4.1.0: {}
 
   pkce-challenge@5.0.0: {}
-
-  prettier@3.0.3: {}
 
   pretty-ms@9.2.0:
     dependencies:
