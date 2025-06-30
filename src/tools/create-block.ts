@@ -3,6 +3,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { CreateOpSchema } from "@basehub/mutation-api-helpers";
 import { basehub } from "basehub";
+import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -46,9 +47,8 @@ export default async function createBlocks({
   autoCommit,
 }: InferSchema<typeof schema>) {
   try {
-    const { write: token, ref } = await authenticate(
-      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
-    );
+    const mcpToken = getMcpToken();
+    const { write: token, ref } = await authenticate(mcpToken);
 
     const result = await basehub({ token, ref: ref.name }).mutation({
       transaction: {

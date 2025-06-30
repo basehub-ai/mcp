@@ -1,6 +1,7 @@
 import { basehub } from "basehub";
 import { authenticate } from "../utils/constants";
 import { z } from "zod";
+import { getMcpToken } from "../utils";
 
 export const schema = {
   limit: z.number().optional().describe("The number of branches to list"),
@@ -29,9 +30,8 @@ export default async function listBranches({
   offset?: number;
 }) {
   try {
-    const { write: token, ref } = await authenticate(
-      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
-    );
+    const mcpToken = getMcpToken();
+    const { write: token, ref } = await authenticate(mcpToken);
     const result = await basehub({ token, ref: ref.name }).query({
       _sys: {
         branches: {

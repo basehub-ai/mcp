@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { fetchBaseHubGraphQL } from "../utils/graphql";
+import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -183,9 +184,9 @@ export default async function getGraphQLSchema({
   format,
 }: InferSchema<typeof schema>) {
   try {
+    const mcpToken = getMcpToken();
     const result = await fetchBaseHubGraphQL({
-      token:
-        "bshb_pk_taqowmfs9qp4z8hg7t4kqrr4l6wm9eojydpsvew0t17nqt8h0tcwzzno5axt32wk",
+      token: mcpToken,
       query: INTROSPECTION_QUERY,
       branchName: "main",
     });

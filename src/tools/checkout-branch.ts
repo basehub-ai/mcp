@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { BASEHUB_APP_URL } from "../utils/constants";
+import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -27,13 +28,13 @@ export default async function checkoutBranch({
   branchName,
 }: InferSchema<typeof schema>) {
   try {
+    const mcpToken = getMcpToken();
     // Call the BaseHub MCP manage endpoint to checkout the branch
     const response = await fetch(`${BASEHUB_APP_URL}/api/mcp/manage`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "x-basehub-mcp-token":
-          "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu",
+        "x-basehub-mcp-token": mcpToken,
       },
       body: JSON.stringify({
         op: "checkout",

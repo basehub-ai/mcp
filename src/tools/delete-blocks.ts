@@ -1,4 +1,4 @@
-import { basehubMutationResult } from "../utils";
+import { basehubMutationResult, getMcpToken } from "../utils";
 import { authenticate } from "../utils/constants";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
@@ -33,9 +33,8 @@ export default async function deleteBlocks({
   autoCommit,
 }: InferSchema<typeof schema>) {
   try {
-    const { write: token, ref } = await authenticate(
-      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
-    );
+    const mcpToken = getMcpToken();
+    const { write: token, ref } = await authenticate(mcpToken);
     const result = await basehub({ token, ref: ref.name }).mutation({
       transaction: {
         __args: {

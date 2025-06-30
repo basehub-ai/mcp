@@ -2,6 +2,7 @@ import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { authenticate } from "../utils/constants";
+import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -35,26 +36,27 @@ export default async function commit({
   force,
 }: InferSchema<typeof schema>) {
   try {
-    const { write: token, ref } = await authenticate(
-      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
-    );
+    const mcpToken = getMcpToken();
+    const { write: writeToken, ref } = await authenticate(mcpToken);
     // Commit pending transactions with the provided message
-    const result = await basehub({ token, ref: ref.name }).mutation({
-      transaction: {
-        __args: {
-          data: [
-            {
-              branchName: ref.name,
-              type: "commit",
-              message,
-            },
-          ],
+    const result = await basehub({ token: writeToken, ref: ref.name }).mutation(
+      {
+        transaction: {
+          __args: {
+            data: [
+              {
+                branchName: ref.name,
+                type: "commit",
+                message,
+              },
+            ],
+          },
+          message: true,
+          status: true,
+          duration: true,
         },
-        message: true,
-        status: true,
-        duration: true,
-      },
-    });
+      }
+    );
 
     return {
       content: [

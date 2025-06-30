@@ -3,6 +3,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { BASEHUB_BLOCK_TYPES } from "../utils/constants";
 import { basehub } from "basehub";
+import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -53,10 +54,8 @@ export default async function getRepositoryStructure({
   targetBlock,
 }: InferSchema<typeof schema>) {
   try {
-    // Send the mutation as a transaction
-    const { write: token, ref } = await authenticate(
-      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
-    );
+    const mcpToken = getMcpToken();
+    const { write: token, ref } = await authenticate(mcpToken);
 
     const result = await basehub({ token, ref: ref.name }).query({
       _structure: {

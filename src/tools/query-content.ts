@@ -2,6 +2,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { fetchBaseHubGraphQL } from "../utils/graphql";
 import { authenticate } from "../utils/constants";
+import { getMcpToken } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -40,9 +41,8 @@ export default async function queryContentRepository({
   variables,
 }: InferSchema<typeof schema>) {
   try {
-    const { read: token, ref } = await authenticate(
-      "bshb_mcp_VV4rZuKEHpKxTrRuV7Z436LVNC4CBld6mPPakQxzoLSpQo6UQRP1Z4JHTSmseKfu"
-    );
+    const mcpToken = getMcpToken();
+    const { read: token, ref } = await authenticate(mcpToken);
     const result = await fetchBaseHubGraphQL({
       token,
       query,
