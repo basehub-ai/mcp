@@ -1,15 +1,14 @@
 import { authenticate } from "../utils/auth";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
-import { UpdateOpSchema } from "@basehub/mutation-api-helpers";
 import { basehub } from "basehub";
 import { getMcpToken } from "../utils";
 
 export const schema = {
   data: z
-    .array(UpdateOpSchema.omit({ children: true }))
+    .array(z.object({ id: z.string() }).passthrough())
     .describe(
-      "Array of update objects, each with at least 'id', 'type', and update fields. block 'type' key is crucial to make updates, see block types for reference."
+      "Array of update objects, each with at least 'id' and update fields. see block types for reference."
     ),
   autoCommit: z
     .string()
@@ -41,7 +40,7 @@ export default async function updateBlocks({
       transaction: {
         __args: {
           authorId: userId,
-          data: data.map((item) => ({ ...item, type: "update" })),
+          data: data.map((item) => ({ ...item, type: "update", id: item.id })),
           ...(autoCommit ? { autoCommit } : {}),
         },
         message: true,
