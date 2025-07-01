@@ -8,7 +8,7 @@ export const schema = {
   data: z
     .array(z.object({ id: z.string() }).passthrough())
     .describe(
-      "Array of update objects, each with at least 'id' and update fields. see block types for reference."
+      "Array of update objects, each with at least 'id' and update fields. see block types for reference. When updating layout (document, instance, etc.) blocks, use value: { childApiName: ..., ... } to update the children blocks."
     ),
   autoCommit: z
     .string()
@@ -20,7 +20,8 @@ export const schema = {
 
 export const metadata = {
   name: "update_blocks",
-  description: "Update one or more BaseHub blocks in a single transaction.",
+  description: `Update one or more BaseHub blocks in a single transaction.
+When updating layout (document, instance, etc.) blocks, use value: { childApiName: ..., ... } to update the children blocks.`,
   annotations: {
     title: "Update BaseHub Blocks",
     readOnlyHint: false,
