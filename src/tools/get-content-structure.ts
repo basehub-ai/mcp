@@ -57,7 +57,7 @@ export default async function getRepositoryStructure({
     const mcpToken = getMcpToken();
     const { write: token, ref } = await authenticate(mcpToken);
 
-    const result = await basehub({ token, ref: ref.name }).query({
+    const result = await basehub({ token, ref: ref.name, draft }).query({
       _structure: {
         __args: {
           resolveTargetsWith: "objectName",
@@ -76,7 +76,9 @@ export default async function getRepositoryStructure({
         {
           type: "text",
           text:
-            "_structure" in result ? result._structure : JSON.stringify(result),
+            ("_structure" in result
+              ? result._structure
+              : JSON.stringify(result)) || "Empty structure",
         },
       ],
     };
