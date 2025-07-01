@@ -26,7 +26,7 @@ export const schema = {
 // Define tool metadata
 export const metadata = {
   name: "query_content",
-  description: `Query the BaseHub content repository. Use this as you need to get content created by the user, or specific IDs for subsequent content changes.
+  description: `Query the BaseHub repository content. Use this as you need to get content created by the user, or specific IDs for subsequent content changes.
 When querying content:
 - Use proper GraphQL syntax
 - Include necessary fields and arguments
@@ -34,7 +34,7 @@ When querying content:
 - Use fragments for reusable field sets
 - Consider using variables for dynamic queries`,
   annotations: {
-    title: "Query BaseHub Content Repository",
+    title: "Query BaseHub Repository Content",
     readOnlyHint: true,
     destructiveHint: false,
     idempotentHint: true,
