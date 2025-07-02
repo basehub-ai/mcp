@@ -2,7 +2,7 @@ import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { authenticate } from "../utils/auth";
-import { getMcpToken } from "../utils";
+import { basehubMutationResult, getMcpToken } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -45,18 +45,23 @@ export default async function commit({ message }: InferSchema<typeof schema>) {
           },
           message: true,
           status: true,
-          duration: true,
         },
       }
     );
 
+    const transaction = basehubMutationResult.parse(result);
+
+    if (transaction.status === "Failed") {
+      return {
+        isError: true,
+        content: [
+          { type: "text", text: `Mutation failed: ${transaction.message}` },
+        ],
+      };
+    }
+
     return {
-      content: [
-        {
-          type: "text",
-          text: JSON.stringify(result, null, 2),
-        },
-      ],
+      content: [{ type: "text", text: transaction.message }],
     };
   } catch (error) {
     return {

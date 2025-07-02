@@ -1,12 +1,16 @@
 import { z } from "zod";
 import { headers } from "xmcp/headers";
 
-export const basehubMutationResult = z.object({
-  transaction: z.object({
-    message: z.string().optional(),
-    status: z.string(),
-  }),
+const transactionSchema = z.object({
+  status: z.enum(["Running", "Completed", "Failed", "Cancelled", "Scheduled"]),
+  message: z.string(),
 });
+
+export const basehubMutationResult = z
+  .object({
+    transaction: transactionSchema,
+  })
+  .transform((data) => data.transaction);
 
 export const getMcpToken = () => {
   const mcpToken = headers()["authorization"];

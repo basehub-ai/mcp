@@ -3,7 +3,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { CreateOpSchema } from "@basehub/mutation-api-helpers";
 import { basehub } from "basehub";
-import { getMcpToken } from "../utils";
+import { getMcpToken, basehubMutationResult } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -63,12 +63,22 @@ export default async function createBlocks({
         },
         message: true,
         status: true,
-        duration: true,
       },
     });
 
+    const transaction = basehubMutationResult.parse(result);
+
+    if (transaction.status === "Failed") {
+      return {
+        isError: true,
+        content: [
+          { type: "text", text: `Mutation failed: ${transaction.message}` },
+        ],
+      };
+    }
+
     return {
-      content: [{ type: "text", text: JSON.stringify(result) }],
+      content: [{ type: "text", text: transaction.message }],
     };
   } catch (error) {
     return {

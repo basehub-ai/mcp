@@ -2,7 +2,7 @@ import { authenticate } from "../utils/auth";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { basehub } from "basehub";
-import { getMcpToken } from "../utils";
+import { basehubMutationResult, getMcpToken } from "../utils";
 // TODO: Use transaction helpers from basehub
 const CreateBlockStandardSchema = z.object({
   title: z.string().nullable().optional(),
@@ -83,18 +83,7 @@ export default async function updateBlocks({
       },
     });
 
-    const transaction = z
-      .object({
-        status: z.enum([
-          "Running",
-          "Completed",
-          "Failed",
-          "Cancelled",
-          "Scheduled",
-        ]),
-        message: z.string(),
-      })
-      .parse(result);
+    const transaction = basehubMutationResult.parse(result);
 
     if (transaction.status === "Failed") {
       return {
@@ -102,7 +91,7 @@ export default async function updateBlocks({
         content: [
           {
             type: "text",
-            text: `Error: ${transaction.message}. Make sure to check BaseHub mutation types and structure if the error persists.`,
+            text: `Mutation failed: ${transaction.message}. Make sure to check BaseHub mutation types and structure if the error persists.`,
           },
         ],
       };

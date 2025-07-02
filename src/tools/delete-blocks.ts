@@ -48,10 +48,18 @@ export default async function deleteBlocks({
       },
     });
 
-    const parsedResult = basehubMutationResult.parse(result);
+    const transaction = basehubMutationResult.parse(result);
+    if (transaction.status === "Failed") {
+      return {
+        isError: true,
+        content: [
+          { type: "text", text: `Mutation failed: ${transaction.message}` },
+        ],
+      };
+    }
 
     return {
-      content: [{ type: "text", text: JSON.stringify(result) }],
+      content: [{ type: "text", text: transaction.message }],
     };
   } catch (error) {
     return {
