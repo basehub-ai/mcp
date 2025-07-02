@@ -8,6 +8,7 @@ export const FAILED_MUTATION_HELP_TEXT = `MAKE SURE TO CHECK BASEHUB MUTATION TY
 // TODO: Some blocks as event or workflow are not present since we don't yet support them in the Mutation API.
 export const BASEHUB_BLOCK_TYPES = `
     IMPORTANT: When writing block types for mutations, they go in kebab-case. E.g: RichText is written as 'rich-text'.
+    NOTE: The \`isRequired\` field is optional and defaults to \`false\`. Here's used as an example of other fields apart from \`value\`.
     ---
     
     # BaseHub Block Types
@@ -45,9 +46,9 @@ export const BASEHUB_BLOCK_TYPES = `
       }
       \`\`\`
     - **Mutation Usage**:  
-      - Markdown: \`{ format: "markdown", value: "# Hello" }\`
-      - HTML: \`{ format: "html", value: "<h1>Hello</h1>" }\`
-      - JSON: \`{ format: "json", value: { ... } }\`
+      - Markdown: \`{ value:{ format: "markdown", value: "# Hello" }, isRequired: boolean, ... }\`
+      - HTML: \`{ value:{ format: "html", value: "<h1>Hello</h1>" }, isRequired: boolean, ... }\`
+      - JSON: \`{ value:{ format: "json", value: { ... } }, isRequired: boolean, ... }\`
     - **Query Usage**:
       - Get HTML: \`fieldName { html }\`
       - Get Markdown: \`fieldName { markdown }\`
