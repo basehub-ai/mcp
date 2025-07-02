@@ -92,7 +92,7 @@ export default async function updateBlocks({
         content: [
           {
             type: "text",
-            text: `Mutation failed: ${transaction.message}.`,
+            text: `Mutation failed: ${transaction.message ?? "Unknown error"}.`,
           },
           {
             type: "text",
@@ -102,7 +102,12 @@ export default async function updateBlocks({
       };
     }
     return {
-      content: [{ type: "text", text: transaction.message }],
+      content: [
+        {
+          type: "text",
+          text: `Transaction ${transaction.status}`,
+        },
+      ],
     };
   } catch (error) {
     return {

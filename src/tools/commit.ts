@@ -55,13 +55,16 @@ export default async function commit({ message }: InferSchema<typeof schema>) {
       return {
         isError: true,
         content: [
-          { type: "text", text: `Mutation failed: ${transaction.message}` },
+          {
+            type: "text",
+            text: `Mutation failed: ${transaction.message ?? "Unknown error"}.`,
+          },
         ],
       };
     }
 
     return {
-      content: [{ type: "text", text: transaction.message }],
+      content: [{ type: "text", text: `Transaction ${transaction.status}` }],
     };
   } catch (error) {
     return {

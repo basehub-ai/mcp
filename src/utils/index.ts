@@ -3,7 +3,7 @@ import { headers } from "xmcp/headers";
 
 const transactionSchema = z.object({
   status: z.enum(["Running", "Completed", "Failed", "Cancelled", "Scheduled"]),
-  message: z.string(),
+  message: z.string().nullable(),
 });
 
 export const basehubMutationResult = z

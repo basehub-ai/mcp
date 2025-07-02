@@ -73,7 +73,10 @@ export default async function createBlocks({
       return {
         isError: true,
         content: [
-          { type: "text", text: `Mutation failed: ${transaction.message}` },
+          {
+            type: "text",
+            text: `Mutation failed: ${transaction.message ?? "Unknown error"}.`,
+          },
           {
             type: "text",
             text: FAILED_MUTATION_HELP_TEXT,
@@ -83,7 +86,7 @@ export default async function createBlocks({
     }
 
     return {
-      content: [{ type: "text", text: transaction.message }],
+      content: [{ type: "text", text: `Transaction ${transaction.status}` }],
     };
   } catch (error) {
     return {
