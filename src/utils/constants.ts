@@ -13,7 +13,7 @@ export const BASEHUB_BLOCK_TYPES = `
     ## document
     Container for other blocks. Access directly by field name.
     - **Value Type**: Defined by its children (array of blocks).
-    - **Mutation Usage**: \`fieldName: { childApiName: {...}, ... }\` where the object contains the values for the children blocks.
+    - **Mutation Usage**: \`fieldName: { childApiNameOrId: { value?: ..., isRequired?: boolean, ... }, ... }\` where the object contains the updates for the children blocks.
     - **Query Usage**: \`fieldName { childFieldName, _sys { id } }\`
     - **Example**: Used as a root or section block to group other blocks.
     
@@ -32,12 +32,12 @@ export const BASEHUB_BLOCK_TYPES = `
     Rich text with multiple output formats.
     - **Mutation Value Type**:  
       \`\`\`ts
-      {
+      value: {
         format: 'markdown' | 'html';
         value: string;
       }
       // or
-      {
+      value: {
         format: 'json';
         value: string | unknown;
       }
@@ -179,7 +179,7 @@ export const BASEHUB_BLOCK_TYPES = `
         value?: Record<string, unknown> | null;
       }
       \`\`\`
-    - **Mutation Usage**: \`{ mainComponentId: "...", value: { childApiName: {...}, ... } }\`
+    - **Mutation Usage**: \`{ mainComponentId: "...", value: { childApiNameOrId: { value?: ..., isRequired?: boolean, ... }, ... } }\`
     - **Query Usage**: \`fieldName { ... on ComponentType { childFieldName } }\`
     - **Example**: Placing a component in a document.
     
