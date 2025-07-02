@@ -35,12 +35,12 @@ export const BASEHUB_BLOCK_TYPES = `
     Rich text with multiple output formats.
     - **Mutation Value Type**:  
       \`\`\`ts
-      value: {
+      {
         format: 'markdown' | 'html';
         value: string;
       }
       // or
-      value: {
+      {
         format: 'json';
         value: string | unknown;
       }
