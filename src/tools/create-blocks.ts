@@ -4,6 +4,7 @@ import { type InferSchema } from "xmcp";
 import { CreateOpSchema } from "@basehub/mutation-api-helpers";
 import { basehub } from "basehub";
 import { getMcpToken, basehubMutationResult } from "../utils";
+import { FAILED_MUTATION_HELP_TEXT } from "../utils/constants";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -73,6 +74,10 @@ export default async function createBlocks({
         isError: true,
         content: [
           { type: "text", text: `Mutation failed: ${transaction.message}` },
+          {
+            type: "text",
+            text: FAILED_MUTATION_HELP_TEXT,
+          },
         ],
       };
     }

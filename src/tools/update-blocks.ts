@@ -3,6 +3,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { basehub } from "basehub";
 import { basehubMutationResult, getMcpToken } from "../utils";
+import { FAILED_MUTATION_HELP_TEXT } from "../utils/constants";
 // TODO: Use transaction helpers from basehub
 const CreateBlockStandardSchema = z.object({
   title: z.string().nullable().optional(),
@@ -91,7 +92,11 @@ export default async function updateBlocks({
         content: [
           {
             type: "text",
-            text: `Mutation failed: ${transaction.message}. Make sure to check BaseHub mutation types and structure if the error persists.`,
+            text: `Mutation failed: ${transaction.message}.`,
+          },
+          {
+            type: "text",
+            text: FAILED_MUTATION_HELP_TEXT,
           },
         ],
       };

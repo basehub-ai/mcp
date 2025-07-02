@@ -3,6 +3,8 @@ export const BASEHUB_APP_URL =
 export const BASEHUB_API_URL =
   process.env.BASEHUB_API_URL ?? "http://api.basehub.com/graphql";
 
+export const FAILED_MUTATION_HELP_TEXT = `MAKE SURE TO CHECK BASEHUB MUTATION TYPES AND STRUCTURE IF THE ERROR PERSISTS.`;
+
 // TODO: Some blocks as event or workflow are not present since we don't yet support them in the Mutation API.
 export const BASEHUB_BLOCK_TYPES = `
     IMPORTANT: When writing block types for mutations, they go in kebab-case. E.g: RichText is written as 'rich-text'.
