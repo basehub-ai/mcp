@@ -80,11 +80,35 @@ export default async function updateBlocks({
         },
         message: true,
         status: true,
-        duration: true,
       },
     });
+
+    const transaction = z
+      .object({
+        status: z.enum([
+          "Running",
+          "Completed",
+          "Failed",
+          "Cancelled",
+          "Scheduled",
+        ]),
+        message: z.string(),
+      })
+      .parse(result);
+
+    if (transaction.status === "Failed") {
+      return {
+        isError: true,
+        content: [
+          {
+            type: "text",
+            text: `Error: ${transaction.message}. Make sure to check BaseHub mutation types and structure if the error persists.`,
+          },
+        ],
+      };
+    }
     return {
-      content: [{ type: "text", text: JSON.stringify(result) }],
+      content: [{ type: "text", text: transaction.message }],
     };
   } catch (error) {
     return {
