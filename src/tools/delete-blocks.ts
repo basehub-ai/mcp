@@ -19,7 +19,7 @@ export const schema = {
 
 export const metadata = {
   name: "delete_blocks",
-  description: "Delete one or more BaseHub blocks in a single transaction.",
+  description: `Delete one or more BaseHub blocks in a single transaction. Only requires the block ID.`,
   annotations: {
     title: "Delete BaseHub Blocks",
     readOnlyHint: false,
@@ -28,10 +28,7 @@ export const metadata = {
   },
 };
 
-async function deleteBlocks({
-  data,
-  autoCommit,
-}: InferSchema<typeof schema>) {
+async function deleteBlocks({ data, autoCommit }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
     const { write: token, ref, userId } = await authenticate(mcpToken);

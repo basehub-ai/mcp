@@ -1,7 +1,10 @@
 import { authenticate } from "../utils/auth";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
-import { CreateOpSchema } from "@basehub/mutation-api-helpers";
+import {
+  CreateOpSchema,
+  mutationApiAvailableBlockTypes,
+} from "@basehub/mutation-api-helpers";
 import { basehub } from "basehub";
 import { getMcpToken, basehubMutationResult, withLogging } from "../utils";
 import { FAILED_MUTATION_HELP_TEXT } from "../utils/constants";
@@ -30,9 +33,24 @@ export const schema = {
 // Define tool metadata
 export const metadata = {
   name: "create_blocks",
-  description: `Create one or more BaseHub blocks (with possible nested children) in a single transaction.
+  description: `Create one or more BaseHub blocks (with possible nested children).
   Children should be always nested in the value key of its parent, never as another item in the array.
-  See block types in BaseHub for reference.`,
+Use create_blocks to add new blocks. Create data objects require specifying the block type and its initial values.
+
+### Basic Create Structure
+\`\`\`json
+{
+  "parentId"?: "<layout-block-id>",
+  "data": {
+    "type": ${Object.values(mutationApiAvailableBlockTypes)
+      .map((val) => `"${val}"`)
+      .join(" | ")},
+    "title": "<block-title>",
+    "value": <block-value-dependant-on-type>
+  }
+}
+\`\`\`
+`,
   annotations: {
     title: "Create BaseHub Blocks",
     readOnlyHint: false,

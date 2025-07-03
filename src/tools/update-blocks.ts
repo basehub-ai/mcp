@@ -4,40 +4,7 @@ import { type InferSchema } from "xmcp";
 import { basehub } from "basehub";
 import { basehubMutationResult, getMcpToken, withLogging } from "../utils";
 import { FAILED_MUTATION_HELP_TEXT } from "../utils/constants";
-// TODO: Use transaction helpers from basehub
-const CreateBlockStandardSchema = z.object({
-  title: z.string().nullable().optional(),
-  apiName: z.string().nullable().optional(),
-  slug: z.string().nullable().optional(),
-  transactionId: z.string().nullable().optional(),
-  hidden: z.boolean().optional(),
-  searchIndex: z.boolean().optional(),
-  previewURL: z.string().optional(),
-  description: z.string().optional(),
-  idempotency: z
-    .object({
-      key: z.enum(["id", "title", "slug", "apiName"]),
-      value: z.string(),
-    })
-    .optional(),
-});
-
-const UpdateBlockStandardSchema = CreateBlockStandardSchema.pick({
-  hidden: true,
-  previewURL: true,
-  searchIndex: true,
-  slug: true,
-  title: true,
-  apiName: true,
-  description: true,
-}).partial();
-
-const UpdateOpSchema = z
-  .object({
-    id: z.string(),
-    value: z.record(z.string(), z.any()).optional(),
-  })
-  .merge(UpdateBlockStandardSchema);
+import { UpdateOpSchema } from "@basehub/mutation-api-helpers";
 
 export const schema = {
   data: z
@@ -55,8 +22,23 @@ export const schema = {
 
 export const metadata = {
   name: "update_blocks",
-  description: `Update one or more BaseHub blocks in a single transaction. see block types for reference.
-When updating layout (document, instance, etc.) blocks, use value: { childApiName: ..., ... } to update the children blocks.`,
+  description: `Use update_blocks to modify existing blocks. You must specify the block ID and the properties you want to change.
+### Update Structure
+\`\`\`json
+{
+  "type": "update",
+  "id": "<layout-block-id>",
+  "value": {
+    // primitive block updates go here
+  }
+  "variantOverrides": {
+    // optional record of <variant-set-api-name>-<variant-apiName> and block value
+  }
+}
+\`\`\`
+
+Notice how the update syntax is the same as the create operation of the \`instance\` block: by API Name directly!
+`,
   annotations: {
     title: "Update BaseHub Blocks",
     readOnlyHint: false,
@@ -65,10 +47,7 @@ When updating layout (document, instance, etc.) blocks, use value: { childApiNam
   },
 };
 
-async function updateBlocks({
-  data,
-  autoCommit,
-}: InferSchema<typeof schema>) {
+async function updateBlocks({ data, autoCommit }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
     const { write: token, ref, userId } = await authenticate(mcpToken);
