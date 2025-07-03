@@ -1,7 +1,7 @@
 import { basehub } from "basehub";
 import { authenticate } from "../utils/auth";
 import { z } from "zod";
-import { getMcpToken } from "../utils";
+import { getMcpToken, withLogging } from "../utils";
 
 export const schema = {
   limit: z.number().optional().describe("The number of branches to list"),
@@ -22,7 +22,7 @@ export const metadata = {
   },
 };
 
-export default async function listBranches({
+async function listBranches({
   limit,
   offset,
 }: {
@@ -79,3 +79,6 @@ export default async function listBranches({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("list_branches", listBranches);

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 // import { MergeBranchOpSchema } from "@basehub/mutation-api-helpers";
 import { basehub } from "basehub";
-import { basehubMutationResult, getMcpToken } from "../utils";
+import { basehubMutationResult, getMcpToken, withLogging } from "../utils";
 
 // (MergeBranchOpSchema)
 export const schema = {
@@ -38,7 +38,7 @@ export const metadata = {
   },
 };
 
-export default async function mergeBranch({
+async function mergeBranch({
   baseBranchName,
   sourceBranchName,
   autoCreateContentRequest,
@@ -94,3 +94,6 @@ export default async function mergeBranch({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("merge_branch", mergeBranch);

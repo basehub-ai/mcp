@@ -3,7 +3,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { BASEHUB_BLOCK_TYPES } from "../utils/constants";
 import { basehub } from "basehub";
-import { getMcpToken } from "../utils";
+import { getMcpToken, withLogging } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -48,7 +48,7 @@ export const metadata = {
 };
 
 // Tool implementation
-export default async function getRepositoryStructure({
+async function getRepositoryStructure({
   focus,
   draft,
   targetBlock,
@@ -96,3 +96,6 @@ export default async function getRepositoryStructure({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("get_content_structure", getRepositoryStructure);

@@ -19,3 +19,6 @@ export const getMcpToken = () => {
   }
   return mcpToken.split(" ")[1];
 };
+
+// Export logging utilities
+export { logToolCall, withLogging } from "./logger";

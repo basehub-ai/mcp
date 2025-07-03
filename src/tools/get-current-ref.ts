@@ -1,6 +1,6 @@
 import { type InferSchema } from "xmcp";
 import { authenticate } from "../utils/auth";
-import { getMcpToken } from "../utils";
+import { getMcpToken, withLogging } from "../utils";
 
 // Define the schema for tool parameters (no parameters needed for get-current-ref)
 export const schema = {};
@@ -19,7 +19,7 @@ This returns information about the currently active branch.`,
 };
 
 // Tool implementation
-export default async function getCurrentRef({}: InferSchema<typeof schema>) {
+async function getCurrentRef({}: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
     const { ref } = await authenticate(mcpToken);
@@ -58,3 +58,6 @@ export default async function getCurrentRef({}: InferSchema<typeof schema>) {
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("get_current_ref", getCurrentRef);

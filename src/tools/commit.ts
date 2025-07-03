@@ -2,7 +2,7 @@ import { basehub } from "basehub";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { authenticate } from "../utils/auth";
-import { basehubMutationResult, getMcpToken } from "../utils";
+import { basehubMutationResult, getMcpToken, withLogging } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -25,7 +25,7 @@ export const metadata = {
 };
 
 // Tool implementation
-export default async function commit({ message }: InferSchema<typeof schema>) {
+async function commit({ message }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
     const { write: writeToken, ref, userId } = await authenticate(mcpToken);
@@ -80,3 +80,6 @@ export default async function commit({ message }: InferSchema<typeof schema>) {
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("commit", commit);
