@@ -2,7 +2,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { fetchBaseHubGraphQL } from "../utils/graphql";
 import { authenticate } from "../utils/auth";
-import { getMcpToken } from "../utils";
+import { getMcpToken, withLogging } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -42,7 +42,7 @@ When querying content:
 };
 
 // Tool implementation
-export default async function queryContentRepository({
+async function queryContentRepository({
   query,
   variables,
   draft = true,
@@ -89,3 +89,6 @@ export default async function queryContentRepository({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("query_content", queryContentRepository);

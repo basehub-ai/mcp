@@ -2,7 +2,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { authenticate } from "../utils/auth";
 import { basehub } from "basehub";
-import { getMcpToken } from "../utils";
+import { getMcpToken, withLogging } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -30,7 +30,7 @@ export const metadata = {
 };
 
 // Tool implementation
-export default async function createBranch({
+async function createBranch({
   baseBranchName,
   branchName,
   description,
@@ -84,3 +84,6 @@ export default async function createBranch({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("create_branch", createBranch);

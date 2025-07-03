@@ -1,4 +1,4 @@
-import { basehubMutationResult, getMcpToken } from "../utils";
+import { basehubMutationResult, getMcpToken, withLogging } from "../utils";
 import { authenticate } from "../utils/auth";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
@@ -28,7 +28,7 @@ export const metadata = {
   },
 };
 
-export default async function deleteBlocks({
+async function deleteBlocks({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
@@ -78,3 +78,6 @@ export default async function deleteBlocks({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("delete_blocks", deleteBlocks);

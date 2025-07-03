@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
+import { withLogging } from "../utils";
 
 type TemplateRepo = {
   handle: string;
@@ -68,7 +69,7 @@ ${templateRepos.map((t) => `- ${t.handle}: ${t.description}`).join("\n")}`,
 };
 
 // Tool implementation
-export default async function getExampleRepositoryStructure({
+async function getExampleRepositoryStructure({
   handle,
 }: InferSchema<typeof schema>) {
   try {
@@ -110,3 +111,6 @@ export default async function getExampleRepositoryStructure({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("get_example_content_structure", getExampleRepositoryStructure);

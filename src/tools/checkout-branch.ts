@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { BASEHUB_APP_URL } from "../utils/constants";
-import { getMcpToken } from "../utils";
+import { getMcpToken, withLogging } from "../utils";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -24,7 +24,7 @@ export const metadata = {
 };
 
 // Tool implementation
-export default async function checkoutBranch({
+async function checkoutBranch({
   branchName,
 }: InferSchema<typeof schema>) {
   try {
@@ -100,3 +100,6 @@ export default async function checkoutBranch({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("checkout_branch", checkoutBranch);

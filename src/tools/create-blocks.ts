@@ -3,7 +3,7 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { CreateOpSchema } from "@basehub/mutation-api-helpers";
 import { basehub } from "basehub";
-import { getMcpToken, basehubMutationResult } from "../utils";
+import { getMcpToken, basehubMutationResult, withLogging } from "../utils";
 import { FAILED_MUTATION_HELP_TEXT } from "../utils/constants";
 
 // Define the schema for tool parameters
@@ -42,7 +42,7 @@ export const metadata = {
 };
 
 // Tool implementation
-export default async function createBlocks({
+async function createBlocks({
   parentId,
   data,
   autoCommit,
@@ -102,3 +102,6 @@ export default async function createBlocks({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("create_blocks", createBlocks);

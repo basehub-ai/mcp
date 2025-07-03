@@ -2,7 +2,7 @@ import { authenticate } from "../utils/auth";
 import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { basehub } from "basehub";
-import { basehubMutationResult, getMcpToken } from "../utils";
+import { basehubMutationResult, getMcpToken, withLogging } from "../utils";
 import { FAILED_MUTATION_HELP_TEXT } from "../utils/constants";
 // TODO: Use transaction helpers from basehub
 const CreateBlockStandardSchema = z.object({
@@ -65,7 +65,7 @@ When updating layout (document, instance, etc.) blocks, use value: { childApiNam
   },
 };
 
-export default async function updateBlocks({
+async function updateBlocks({
   data,
   autoCommit,
 }: InferSchema<typeof schema>) {
@@ -123,3 +123,6 @@ export default async function updateBlocks({
     };
   }
 }
+
+// Export the wrapped function with logging
+export default withLogging("update_blocks", updateBlocks);
