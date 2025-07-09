@@ -2,7 +2,8 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { authenticate } from "../utils/auth";
 import { basehub } from "basehub";
-import { getMcpToken, withLogging } from "../utils";
+import { basehubMutationResult, getMcpToken, withLogging } from "../utils";
+import checkoutBranch from "./checkout-branch";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -14,6 +15,13 @@ export const schema = {
     .string()
     .optional()
     .describe("Optional description for the new branch"),
+  autoCheckout: z
+    .boolean()
+    .optional()
+    .default(true)
+    .describe(
+      "Whether to automatically checkout the new branch. Defaults to true."
+    ),
 };
 
 // Define tool metadata
@@ -34,6 +42,7 @@ async function createBranch({
   baseBranchName,
   branchName,
   description,
+  autoCheckout,
 }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
@@ -58,13 +67,26 @@ async function createBranch({
       },
     });
 
+    const transaction = basehubMutationResult.parse(result);
+
+    if (transaction.status === "Failed") {
+      throw new Error(transaction.message ?? "Unknown error");
+    }
+
+    if (autoCheckout) {
+      const checkoutResult = await checkoutBranch({ branchName });
+      if (checkoutResult.isError) return checkoutResult;
+    }
+
     return {
       content: [
         {
           type: "text",
           text: JSON.stringify({
             success: true,
-            message: `Branch '${branchName}' created successfully from '${baseBranchName}'`,
+            message: `Branch '${branchName}' created${
+              autoCheckout ? " and checked out" : ""
+            } successfully from '${baseBranchName}'`,
             result: result,
           }),
         },
