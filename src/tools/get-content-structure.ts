@@ -32,12 +32,19 @@ export const schema = {
     .describe(
       "Whether to focus on the target block and strip the rest. Defaults to false."
     ),
-  includeDocumentation: z
+  includeMutationsDocumentation: z
     .boolean()
     .optional()
     .default(true)
     .describe(
-      "Whether to include the documentation for the block types. Set to false if docs were already provided in an earlier message."
+      "Whether to include the documentation for the mutation block types. Set to false if docs were already provided in an earlier message or you don't need to do mutations."
+    ),
+  includeQueriesDocumentation: z
+    .boolean()
+    .optional()
+    .default(true)
+    .describe(
+      "Whether to include the documentation for the query block types. Set to false if docs were already provided in an earlier message or you don't need to do queries."
     ),
 };
 
@@ -59,7 +66,8 @@ async function getRepositoryStructure({
   focus,
   draft,
   targetBlock,
-  includeDocumentation,
+  includeMutationsDocumentation,
+  includeQueriesDocumentation,
 }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
@@ -77,17 +85,17 @@ async function getRepositoryStructure({
     });
 
     let content: { type: "text"; text: string }[] = [];
-    if (includeDocumentation) {
-      content.push(
-        {
-          type: "text",
-          text: `Before giving you the structure, here's some important info about the BaseHub data model. Use this as a reference for mutations. ${mutationApiGuidelines}`,
-        },
-        {
-          type: "text",
-          text: `Before giving you the structure, here's some important info about the BaseHub data model. Use this as a reference for queries. ${queryApiGuidelines}`,
-        }
-      );
+    if (includeMutationsDocumentation) {
+      content.push({
+        type: "text",
+        text: `Before giving you the structure, here's some important info about the BaseHub data model. Use this as a reference for mutations. ${mutationApiGuidelines}`,
+      });
+    }
+    if (includeQueriesDocumentation) {
+      content.push({
+        type: "text",
+        text: `Before giving you the structure, here's some important info about the BaseHub data model. Use this as a reference for queries. ${queryApiGuidelines}`,
+      });
     }
 
     content.push({

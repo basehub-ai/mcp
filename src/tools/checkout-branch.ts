@@ -77,12 +77,7 @@ async function checkoutBranch({
       content: [
         {
           type: "text",
-          text: JSON.stringify({
-            success: true,
-            message: `Successfully checked out branch '${branchName}'`,
-            currentBranch: branchName,
-            data: result.data,
-          }),
+          text: `Successfully checked out branch '${branchName}'`,
         },
       ],
     };
