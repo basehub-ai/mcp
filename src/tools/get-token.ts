@@ -24,7 +24,15 @@ async function getToken({ type }: InferSchema<typeof schema>) {
     const { read, write } = await authenticate(mcpToken);
     const resolved = type === "read" ? read : write;
 
-    return { content: [{ type: "text", text: resolved }] };
+    return {
+      content: [
+        { type: "text", text: resolved },
+        {
+          type: "text",
+          text: `Note: don't inline the token, prefer asking the user to append it to their .env/.env.local`,
+        },
+      ],
+    };
   } catch (error) {
     return {
       isError: true,
