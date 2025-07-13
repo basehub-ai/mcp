@@ -17,7 +17,7 @@ export const schema = {
 };
 
 export const metadata = {
-  name: "search_docs",
+  name: "search_developer_docs",
   description: `Search the BaseHub developer docs.`,
   annotations: {
     title: "Search BaseHub Developer Docs",
@@ -27,7 +27,7 @@ export const metadata = {
   },
 };
 
-async function searchDocs({
+async function searchDeveloperDocs({
   query,
   page,
   perPage,
@@ -52,4 +52,4 @@ async function searchDocs({
   }
 }
 
-export default withLogging("search_docs", searchDocs);
+export default withLogging("search_docs", searchDeveloperDocs);
