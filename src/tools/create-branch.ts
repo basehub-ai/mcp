@@ -90,6 +90,10 @@ async function createBranch({
             result: result,
           }),
         },
+        {
+          type: "text",
+          text: `Note: to make the \`basehub\` SDK use this branch, ask the user to append BASEHUB_REF="<branch-name>" to their .env/.env.local`,
+        },
       ],
     };
   } catch (error) {

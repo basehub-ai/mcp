@@ -24,9 +24,7 @@ export const metadata = {
 };
 
 // Tool implementation
-async function checkoutBranch({
-  branchName,
-}: InferSchema<typeof schema>) {
+async function checkoutBranch({ branchName }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
     // Call the BaseHub MCP manage endpoint to checkout the branch
@@ -78,6 +76,10 @@ async function checkoutBranch({
         {
           type: "text",
           text: `Successfully checked out branch '${branchName}'`,
+        },
+        {
+          type: "text",
+          text: `Note: to make the \`basehub\` SDK use this branch, ask the user to append BASEHUB_REF="<branch-name>" to their .env/.env.local`,
         },
       ],
     };

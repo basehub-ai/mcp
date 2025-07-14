@@ -15,11 +15,11 @@ export const schema = {
 export const metadata = {
   name: "commit",
   description:
-    "Commit pending transactions in the BaseHub repository with a descriptive message",
+    "Create a new commit in BaseHub, publishing all draft changes (note: this not only commits your changes, but also other changes that may've been drafted by others).",
   annotations: {
     title: "Commit Changes",
     readOnlyHint: false,
-    destructiveHint: false,
+    destructiveHint: true,
     idempotentHint: false,
   },
 };
