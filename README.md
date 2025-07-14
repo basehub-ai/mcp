@@ -1,6 +1,10 @@
-# XMCP Application
+# BaseHub MCP
+
 
 This project was created with [create-xmcp-app](https://github.com/basementstudio/xmcp).
+The MCP (Model Context Protocol) integration enables AI agents to interact directly with your BaseHub repository through a comprehensive set of tools. From creating and updating content blocks to managing assets and automating workflows, you can build functional websites, migrate hardcoded content, and set up forms—all through natural language prompts with your favorite AI tools.
+
+<img width="3600" height="2025" alt="MCP Changelog, V01" src="https://github.com/user-attachments/assets/f15d5a03-3ca6-40c7-afa4-aadc2d483747" />
 
 ## Getting Started
 
