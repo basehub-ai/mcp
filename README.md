@@ -6,7 +6,13 @@ The MCP (Model Context Protocol) integration enables AI agents to interact direc
 
 <img width="3600" height="2025" alt="MCP Changelog, V01" src="https://github.com/user-attachments/assets/f15d5a03-3ca6-40c7-afa4-aadc2d483747" />
 
-## Getting Started
+*This was part of our AI Week venture. [Learn more in our changelog](https://basehub.dev/changelog/ai-week-day-1-basehub-mcp)*
+
+## How to use it
+
+You can check the user documentation in [basehub.com/dcos/ai/mcp](https://docs.basehub.com/ai/mcp)
+
+## Development
 
 First, run the development server:
 
