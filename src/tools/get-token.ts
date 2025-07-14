@@ -29,7 +29,7 @@ async function getToken({ type }: InferSchema<typeof schema>) {
         { type: "text", text: resolved },
         {
           type: "text",
-          text: `Note: don't inline the token, prefer asking the user to append it to their .env/.env.local`,
+          text: `Note: don't inline the token, prefer asking the user to append BASEHUB_TOKEN="<token>" to their .env/.env.local`,
         },
       ],
     };
