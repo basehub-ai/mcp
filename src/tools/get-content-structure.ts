@@ -101,10 +101,8 @@ async function getRepositoryStructure({
     content.push({
       type: "text",
       text:
-        ("_structure" in result
-          ? (result._structure as string | null) ||
-            "The repository structure is empty"
-          : JSON.stringify(result)) || "The repository structure is empty",
+        z.object({ _structure: z.string().nullable() }).parse(result)
+          ._structure || "The repository structure is empty",
     });
 
     return { content };
