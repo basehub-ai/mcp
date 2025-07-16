@@ -3,7 +3,6 @@ import { z } from "zod";
 import { type InferSchema } from "xmcp";
 import { basehub } from "basehub";
 import { getMcpToken, withLogging } from "../utils";
-import { mutationApiGuidelines, queryApiGuidelines } from "../utils/constants";
 
 // Define the schema for tool parameters
 export const schema = {
@@ -32,20 +31,6 @@ export const schema = {
     .describe(
       "Whether to focus on the target block and strip the rest. Defaults to false."
     ),
-  includeMutationsDocumentation: z
-    .boolean()
-    .optional()
-    .default(true)
-    .describe(
-      "Whether to include the documentation for the mutation block types. Set to false if docs were already provided in an earlier message or you don't need to do mutations."
-    ),
-  includeQueriesDocumentation: z
-    .boolean()
-    .optional()
-    .default(true)
-    .describe(
-      "Whether to include the documentation for the query block types. Set to false if docs were already provided in an earlier message or you don't need to do queries."
-    ),
 };
 
 // Define tool metadata
@@ -66,8 +51,6 @@ async function getRepositoryStructure({
   focus,
   draft,
   targetBlock,
-  includeMutationsDocumentation,
-  includeQueriesDocumentation,
 }: InferSchema<typeof schema>) {
   try {
     const mcpToken = getMcpToken();
@@ -85,24 +68,16 @@ async function getRepositoryStructure({
     });
 
     let content: { type: "text"; text: string }[] = [];
-    if (includeMutationsDocumentation) {
-      content.push({
-        type: "text",
-        text: `Before giving you the structure, here's some important info about the BaseHub data model. Use this as a reference for mutations. ${mutationApiGuidelines}`,
-      });
-    }
-    if (includeQueriesDocumentation) {
-      content.push({
-        type: "text",
-        text: `Before giving you the structure, here's some important info about the BaseHub data model. Use this as a reference for queries. ${queryApiGuidelines}`,
-      });
-    }
 
     content.push({
       type: "text",
       text:
         z.object({ _structure: z.string().nullable() }).parse(result)
           ._structure || "The repository structure is empty",
+    });
+    content.push({
+      type: "text",
+      text: "Note: in order to understand more about the different block types and ways to mutate them, use the search_developer_docs tool (e.g. search_developer_docs(query: 'query guidelines rich-text') or search_developer_docs(query: 'mutation date block'))",
     });
 
     return { content };
