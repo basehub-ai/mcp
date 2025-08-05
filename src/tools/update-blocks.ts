@@ -24,16 +24,18 @@ export const metadata = {
   name: "update_blocks",
   description: `Use update_blocks to modify existing blocks. You must specify the block ID and the properties you want to change.
 ### Update Structure
-\`\`\`json
+\`\`\`json (example)
 {
-  "type": "update",
-  "id": "<layout-block-id>",
-  "value": {
-    // primitive block updates go here
-  }
-  "variantOverrides": {
-    // optional record of <variant-set-api-name>-<variant-apiName> and block value
-  }
+  "autoCommit"?: "<commit-message>",
+  "data": [{
+    "id": "<layout-block-id>",
+    "value": {
+      // primitive block updates go here
+    }
+    "variantOverrides": {
+      // optional record of <variant-set-api-name>-<variant-apiName> and block value
+    }
+  }]
 }
 \`\`\`
 

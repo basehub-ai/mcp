@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@basehub/mutation-api-helpers':
-        specifier: 2.1.6
-        version: 2.1.6(zod@3.25.67)
+        specifier: 2.1.7
+        version: 2.1.7(zod@3.25.67)
       basehub:
         specifier: 9.0.22
         version: 9.0.22(@babel/runtime@7.27.6)(react@18.3.1)(typescript@5.8.3)(zod@3.25.67)
@@ -47,8 +47,8 @@ packages:
     peerDependencies:
       zod: ^3.25.0
 
-  '@basehub/mutation-api-helpers@2.1.6':
-    resolution: {integrity: sha512-Ug8bH8tjw3Y1g8dBzewDqJtKLyRX/QU/LNoswJ+Ayn6rC/hOVbiS9EKDXG5X50J3qp07IxTZ8b7zMTbnk9ob4g==}
+  '@basehub/mutation-api-helpers@2.1.7':
+    resolution: {integrity: sha512-Oe0SaaLShEYyqgaeICD7GkJdniMvSVdQWsXmgelLMgHfgS4q0wFKK2LQr4A7ttAG3z/yEeeCZ3mZ1MAcuwyBiA==}
     peerDependencies:
       zod: ^3.25.0
 
@@ -2936,7 +2936,7 @@ snapshots:
     dependencies:
       zod: 3.25.67
 
-  '@basehub/mutation-api-helpers@2.1.6(zod@3.25.67)':
+  '@basehub/mutation-api-helpers@2.1.7(zod@3.25.67)':
     dependencies:
       zod: 3.25.67
 

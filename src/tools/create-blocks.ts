@@ -41,13 +41,13 @@ Use create_blocks to add new blocks. Create data objects require specifying the 
 \`\`\`json
 {
   "parentId"?: "<layout-block-id>",
-  "data": {
+  "data": [{
     "type": ${Object.values(mutationApiAvailableBlockTypes)
       .map((val) => `"${val}"`)
       .join(" | ")},
     "title": "<block-title>",
     "value": <block-value-dependant-on-type>
-  }
+    }]
 }
 \`\`\`
 `,
